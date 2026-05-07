@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://xr7cqa.github.io/sitemap.txt
-Sitemap: https://xr7cqa.github.io/sitemap-main.xml
+Sitemap: https://xr7cqa.github.io/sitemap.xml
