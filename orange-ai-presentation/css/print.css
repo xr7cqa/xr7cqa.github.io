@@ -1,0 +1,83 @@
+/* ============================================================
+   نسخة الطباعة — كل شريحة صفحة مستقلة 16:9 بدون أدوات تحكم
+   ============================================================ */
+
+.print-mode,
+.print-mode body {
+  overflow: visible;
+  height: auto;
+  background: #0f2a20;
+}
+
+.print-mode .deck {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  background: #0f2a20;
+  display: block;
+}
+
+.print-mode .slide {
+  position: relative;
+  inset: auto;
+  width: 100vw;
+  height: 56.25vw;
+  max-height: 100vh;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto;
+  transform: none !important;
+  clip-path: none !important;
+  transition: none !important;
+  break-after: page;
+  page-break-after: always;
+  margin: 0 auto;
+}
+
+.print-mode .slide:last-child {
+  break-after: auto;
+  page-break-after: auto;
+}
+
+.print-mode [data-reveal] {
+  opacity: 1 !important;
+  transform: none !important;
+  clip-path: none !important;
+  transition: none !important;
+}
+
+.print-mode .anim-float,
+.print-mode .anim-drift,
+.print-mode .intro-scan,
+.print-mode .arch-wire-dash {
+  animation: none !important;
+}
+
+/* لا أدوات تحكم في نسخة الطباعة */
+.print-mode .chrome,
+.print-mode .overview,
+.print-mode .cinema__tools .btn-ghost,
+.print-mode .flow__controls {
+  display: none !important;
+}
+
+.print-mode .slide__inner {
+  padding-bottom: var(--safe-y);
+}
+
+@page {
+  size: 1600px 900px;
+  margin: 0;
+}
+
+@media print {
+  .print-mode .slide {
+    width: 1600px;
+    height: 900px;
+    max-height: none;
+  }
+  .print-mode .chrome,
+  .print-mode .overview {
+    display: none !important;
+  }
+}
