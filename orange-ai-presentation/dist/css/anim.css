@@ -1,0 +1,141 @@
+/* ============================================================
+   Staggered Reveal — العنوان ثم العنصر البصري ثم النص
+   ============================================================ */
+
+[data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 14px, 0);
+  transition: opacity 620ms var(--ease), transform 620ms var(--ease),
+    clip-path 720ms var(--ease-soft);
+  transition-delay: var(--rd, 0ms);
+  will-change: opacity, transform;
+}
+
+[data-reveal='mask'] {
+  clip-path: inset(0 0 100% 0);
+  transform: none;
+}
+
+[data-reveal='right'] {
+  transform: translate3d(26px, 0, 0);
+}
+
+[data-reveal='left'] {
+  transform: translate3d(-26px, 0, 0);
+}
+
+[data-reveal='scale'] {
+  transform: scale(0.94);
+}
+
+[data-reveal='fade'] {
+  transform: none;
+}
+
+.slide.is-active [data-reveal] {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 0 0 0);
+}
+
+/* بعد انتهاء الظهور لا حاجة لطبقة تركيب مستقلة */
+.slide.is-active.is-settled [data-reveal] {
+  will-change: auto;
+}
+
+/* توقف الحركة عند التفضيل */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  .slide {
+    transition-duration: 1ms !important;
+    transition-delay: 0ms !important;
+  }
+}
+
+/* ============================================================
+   حركات مستمرة خفيفة
+   ============================================================ */
+
+@keyframes floatSoft {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+}
+
+@keyframes driftSlow {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-14px, 10px, 0) scale(1.05);
+  }
+}
+
+@keyframes beltMove {
+  to {
+    background-position-x: -120px;
+  }
+}
+
+@keyframes pulseRing {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.55;
+  }
+  70% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+@keyframes dashFlow {
+  to {
+    stroke-dashoffset: -60;
+  }
+}
+
+@keyframes scanSweep {
+  0% {
+    transform: translateY(-8%);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.85;
+  }
+  75% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(108%);
+    opacity: 0;
+  }
+}
+
+.anim-float {
+  animation: floatSoft 7s ease-in-out infinite;
+}
+
+.anim-drift {
+  animation: driftSlow 16s ease-in-out infinite;
+}
+
+.slide:not(.is-active) .anim-float,
+.slide:not(.is-active) .anim-drift {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-float,
+  .anim-drift {
+    animation: none !important;
+  }
+}

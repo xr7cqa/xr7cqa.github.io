@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>نسخة الطباعة — نظام ذكي لفحص وتصنيف وفرز ثمار البرتقال</title>
+    <meta
+      name="description"
+      content="عرض مشروع تخرج: منظومة ذكية تجمع الفحص البصري والتحكم الآلي وإدارة البيانات لتحسين جودة البرتقال ورفع كفاءة عمليات الفرز في خطوط الإنتاج."
+    />
+    <meta name="theme-color" content="#153A2C" />
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="css/fonts.css" />
+    <link rel="stylesheet" href="css/core.css" />
+    <link rel="stylesheet" href="css/anim.css" />
+    <link rel="stylesheet" href="css/slides.css" />
+    <link rel="stylesheet" href="css/print.css" />
+  </head>
+  <body class="print-mode">
+    <!-- ==========================================================
+         مكتبة الأيقونات — SVG محلي بالكامل
+         ========================================================== -->
+    <svg class="sprite" aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
+      <defs>
+        <g id="i-base" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></g>
+      </defs>
+
+      <symbol id="ic-arrow" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="ic-grid" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7.5" height="7.5" rx="1.6"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.6"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.6"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.6"/></g></symbol>
+      <symbol id="ic-expand" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H4.5A1.5 1.5 0 0 0 3 4.5V9"/><path d="M15 3h4.5A1.5 1.5 0 0 1 21 4.5V9"/><path d="M15 21h4.5a1.5 1.5 0 0 0 1.5-1.5V15"/><path d="M9 21H4.5A1.5 1.5 0 0 1 3 19.5V15"/></g></symbol>
+      <symbol id="ic-play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5-11-6.5z" fill="currentColor"/></symbol>
+      <symbol id="ic-pause" viewBox="0 0 24 24"><g fill="currentColor"><rect x="7" y="5" width="3.6" height="14" rx="1.2"/><rect x="13.4" y="5" width="3.6" height="14" rx="1.2"/></g></symbol>
+      <symbol id="ic-restart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4.4h-4.4"/></g></symbol>
+      <symbol id="ic-check" viewBox="0 0 24 24"><path d="M5 12.6l4.6 4.6L19 7.4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="ic-close" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6.5 6.5l11 11"/><path d="M17.5 6.5l-11 11"/></g></symbol>
+      <symbol id="ic-alert" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.2 21 19.2H3z"/><path d="M12 10v4"/><path d="M12 16.6h.01"/></g></symbol>
+
+      <symbol id="ic-factory" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20V11l5 3V11l5 3V7l8 4v9z"/><path d="M3 20h18"/><path d="M8 20v-3.2"/><path d="M13.5 20v-3.2"/></g></symbol>
+      <symbol id="ic-crate" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5 12 4l9 4.5v7L12 20l-9-4.5z"/><path d="M3 8.5 12 13l9-4.5"/><path d="M12 13v7"/></g></symbol>
+      <symbol id="ic-belt" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="12.5" width="19" height="6" rx="3"/><path d="M6.5 15.5h11"/><circle cx="8" cy="7.5" r="2.6"/><circle cx="15.5" cy="8" r="2"/></g></symbol>
+      <symbol id="ic-shield" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2 20 6v6c0 4.6-3.4 7.6-8 8.8C7.4 19.6 4 16.6 4 12V6z"/><path d="M8.8 12.2 11 14.4l4.2-4.4"/></g></symbol>
+      <symbol id="ic-worker" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.2"/><path d="M5 20.2c.6-3.8 3.5-5.8 7-5.8s6.4 2 7 5.8"/><path d="M6.6 6.4h10.8"/></g></symbol>
+      <symbol id="ic-chart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.4h16"/><rect x="5.5" y="11" width="3.4" height="6"/><rect x="10.6" y="7.4" width="3.4" height="9.6"/><rect x="15.7" y="13.4" width="3.4" height="3.6"/></g></symbol>
+      <symbol id="ic-camera" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.6" y="7" width="18.8" height="11" rx="2.4"/><circle cx="12" cy="12.5" r="3.4"/><path d="M7.6 7l1.3-2.4h6.2L16.4 7"/></g></symbol>
+      <symbol id="ic-cpu" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="6.5" width="11" height="11" rx="2"/><rect x="10" y="10" width="4" height="4" rx="1"/><path d="M10 3.2v3.3M14 3.2v3.3M10 17.5v3.3M14 17.5v3.3M3.2 10h3.3M3.2 14h3.3M17.5 10h3.3M17.5 14h3.3"/></g></symbol>
+      <symbol id="ic-db" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6.2" rx="7.4" ry="3"/><path d="M4.6 6.2v11.6c0 1.7 3.3 3 7.4 3s7.4-1.3 7.4-3V6.2"/><path d="M4.6 12c0 1.7 3.3 3 7.4 3s7.4-1.3 7.4-3"/></g></symbol>
+      <symbol id="ic-monitor" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.8" y="4.2" width="18.4" height="12" rx="2"/><path d="M9 20h6M12 16.2V20"/><path d="M6.4 12.6l2.8-3 2.4 2.2 3.2-4 2.8 4.8"/></g></symbol>
+      <symbol id="ic-light" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 17h6"/><path d="M10 20.2h4"/><path d="M12 3.4a5.6 5.6 0 0 1 3.4 10.1c-.6.5-.9 1-.9 1.6H9.5c0-.6-.3-1.1-.9-1.6A5.6 5.6 0 0 1 12 3.4z"/></g></symbol>
+      <symbol id="ic-sensor" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.4"/><path d="M7.8 7.8a6 6 0 0 0 0 8.4"/><path d="M16.2 16.2a6 6 0 0 0 0-8.4"/><path d="M5 5a9.9 9.9 0 0 0 0 14"/><path d="M19 19a9.9 9.9 0 0 0 0-14"/></g></symbol>
+      <symbol id="ic-controller" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.4" y="4.4" width="17.2" height="15.2" rx="2"/><path d="M7 8.4h4M7 12h4M7 15.6h4"/><circle cx="16.6" cy="9.4" r="1.6"/><circle cx="16.6" cy="15.2" r="1.6"/></g></symbol>
+      <symbol id="ic-arm" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V9.5l6-3.5 4.6 5.4"/><path d="M14.6 11.4 20 9"/><circle cx="4" cy="20" r="1.6"/><circle cx="10" cy="6" r="1.8"/><path d="M18.4 6.4 21 9l-2.6 2.6"/></g></symbol>
+      <symbol id="ic-code" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8.6 8 4.6 12l4 4"/><path d="M15.4 8l4 4-4 4"/><path d="M13.2 5.6 10.8 18.4"/></g></symbol>
+      <symbol id="ic-brain" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5.2a3 3 0 0 0-5.6 1.3A2.9 2.9 0 0 0 4.6 12a3 3 0 0 0 1.8 5.5A3 3 0 0 0 12 18.6z"/><path d="M12 5.2a3 3 0 0 1 5.6 1.3A2.9 2.9 0 0 1 19.4 12a3 3 0 0 1-1.8 5.5A3 3 0 0 1 12 18.6z"/><path d="M12 5.2v13.4"/></g></symbol>
+      <symbol id="ic-api" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h16M4 15h16"/><path d="M7.6 5.6 6 18.4M17.2 5.6l-1.6 12.8"/></g></symbol>
+      <symbol id="ic-scan" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8.6V6a2 2 0 0 1 2-2h2.6"/><path d="M20 8.6V6a2 2 0 0 0-2-2h-2.6"/><path d="M4 15.4V18a2 2 0 0 0 2 2h2.6"/><path d="M20 15.4V18a2 2 0 0 1-2 2h-2.6"/><path d="M4.6 12h14.8"/></g></symbol>
+      <symbol id="ic-report" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.4h8.4L19 8v12.6H6z"/><path d="M14 3.4V8h5"/><path d="M9 12.4h6M9 16h4"/></g></symbol>
+      <symbol id="ic-orange" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13.6" r="7"/><path d="M12 6.6c0-1.7 1.3-3 3.4-3.2"/><path d="M11.6 6.4C10.4 5 8.8 4.6 7.4 5.2c.3 1.5 1.6 2.6 3.2 2.6"/></g></symbol>
+
+      <!-- شعار جامعة صعدة -->
+      <symbol id="logo-saada" viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" stroke-width="2.4" opacity="0.9" />
+        <circle cx="60" cy="60" r="49" fill="none" stroke="currentColor" stroke-width="1" opacity="0.5" />
+        <g stroke="currentColor" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M60 46c-6-4.6-13-6-20.4-4.6v29C47 69 54 70.4 60 75z" />
+          <path d="M60 46c6-4.6 13-6 20.4-4.6v29C73 69 66 70.4 60 75z" />
+          <path d="M60 46v29" />
+        </g>
+        <g stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.85">
+          <path d="M35 82c8 5.4 16.4 8 25 8s17-2.6 25-8" />
+        </g>
+        <circle cx="60" cy="30" r="5.4" fill="currentColor" opacity="0.9" />
+        <g stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity="0.65">
+          <path d="M60 18v5" /><path d="M48.6 22.6l2.6 4.4" /><path d="M71.4 22.6l-2.6 4.4" />
+        </g>
+      </symbol>
+    </svg>
+
+    <main class="deck" id="deck">
+      <!-- ==================================================
+           01 — الغلاف
+           ================================================== -->
+      <section class="slide slide--dark slide--cover" data-tr="zoom" data-title="الغلاف" aria-label="الغلاف">
+        <div class="bg cover-art" aria-hidden="true">
+          <svg class="cover-art__svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="cvSky" x1="0" y1="0" x2="0.4" y2="1">
+                <stop offset="0" stop-color="#1c4a37" />
+                <stop offset="0.55" stop-color="#153a2c" />
+                <stop offset="1" stop-color="#0d2419" />
+              </linearGradient>
+              <radialGradient id="cvGlow" cx="0.5" cy="0.5" r="0.5">
+                <stop offset="0" stop-color="#e8892d" stop-opacity="0.5" />
+                <stop offset="1" stop-color="#e8892d" stop-opacity="0" />
+              </radialGradient>
+              <linearGradient id="cvBeam" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#f6f1e6" stop-opacity="0.42" />
+                <stop offset="1" stop-color="#f6f1e6" stop-opacity="0" />
+              </linearGradient>
+              <linearGradient id="cvBelt" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#3f7654" />
+                <stop offset="1" stop-color="#1b4231" />
+              </linearGradient>
+              <linearGradient id="cvSteel" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#dce8dd" stop-opacity="0.85" />
+                <stop offset="1" stop-color="#8fae9b" stop-opacity="0.55" />
+              </linearGradient>
+              <radialGradient id="cvOr" cx="0.35" cy="0.3" r="0.78">
+                <stop offset="0" stop-color="#ffc06a" />
+                <stop offset="0.45" stop-color="#f0952f" />
+                <stop offset="1" stop-color="#c4671a" />
+              </radialGradient>
+              <radialGradient id="cvOrDim" cx="0.35" cy="0.3" r="0.78">
+                <stop offset="0" stop-color="#e8a154" />
+                <stop offset="0.5" stop-color="#c97d26" />
+                <stop offset="1" stop-color="#8f5314" />
+              </radialGradient>
+            </defs>
+
+            <rect width="1600" height="900" fill="url(#cvSky)" />
+            <ellipse cx="470" cy="430" rx="430" ry="330" fill="url(#cvGlow)" />
+
+            <!-- هيكل المصنع في الخلفية -->
+            <g opacity="0.16" stroke="#dce8dd" stroke-width="3" fill="none">
+              <path d="M120 130v560M300 190v500M700 150v540M900 210v480" />
+              <path d="M60 250h980M60 356h980" />
+              <path d="M170 130l130 60M750 150l150 60" />
+            </g>
+
+            <!-- حامل الكاميرا -->
+            <g>
+              <rect x="404" y="96" width="20" height="150" rx="8" fill="url(#cvSteel)" opacity="0.85" />
+              <rect x="330" y="86" width="230" height="18" rx="9" fill="url(#cvSteel)" opacity="0.9" />
+              <!-- الكاميرا -->
+              <g>
+                <rect x="352" y="230" width="152" height="92" rx="18" fill="#20302a" stroke="#dce8dd" stroke-opacity="0.5" stroke-width="3" />
+                <rect x="372" y="248" width="60" height="16" rx="8" fill="#3f7654" opacity="0.85" />
+                <circle cx="474" cy="276" r="8" fill="#e8892d" />
+                <rect x="404" y="316" width="60" height="26" rx="8" fill="#20302a" stroke="#dce8dd" stroke-opacity="0.4" stroke-width="2.4" />
+                <circle cx="434" cy="352" r="34" fill="#101d17" stroke="#dce8dd" stroke-opacity="0.55" stroke-width="4" />
+                <circle cx="434" cy="352" r="20" fill="#16302a" />
+                <circle cx="426" cy="344" r="7" fill="#dce8dd" opacity="0.55" />
+              </g>
+              <!-- مخروط الإضاءة -->
+              <path d="M400 384 L268 660 L604 660 L468 384 Z" fill="url(#cvBeam)" />
+              <rect x="268" y="628" width="336" height="4" rx="2" fill="#f6f1e6" opacity="0.5" />
+            </g>
+
+            <!-- السير الناقل -->
+            <g>
+              <rect x="-40" y="656" width="1120" height="66" rx="24" fill="url(#cvBelt)" />
+              <rect x="-40" y="656" width="1120" height="14" rx="7" fill="#dce8dd" opacity="0.16" />
+              <g opacity="0.3" stroke="#dce8dd" stroke-width="4" stroke-linecap="round">
+                <path d="M40 690h44M140 690h44M240 690h44M340 690h44M440 690h44M540 690h44M640 690h44M740 690h44M840 690h44M940 690h44" />
+              </g>
+              <rect x="-40" y="722" width="1120" height="26" rx="10" fill="#0d2419" opacity="0.85" />
+              <g fill="url(#cvSteel)" opacity="0.55">
+                <rect x="120" y="746" width="16" height="120" rx="7" />
+                <rect x="470" y="746" width="16" height="120" rx="7" />
+                <rect x="820" y="746" width="16" height="120" rx="7" />
+              </g>
+            </g>
+
+            <!-- ثمار البرتقال -->
+            <g>
+              <g transform="translate(150,614)">
+                <circle r="42" fill="url(#cvOr)" />
+                <ellipse cx="-14" cy="-16" rx="13" ry="9" fill="#fff" opacity="0.32" transform="rotate(-28)" />
+                <path d="M0-42c0-8 6-13 15-14 1 9-5 15-15 15z" fill="#3f7654" />
+              </g>
+              <g transform="translate(300,620)">
+                <circle r="36" fill="url(#cvOrDim)" />
+                <ellipse cx="-12" cy="-13" rx="11" ry="7" fill="#fff" opacity="0.26" transform="rotate(-28)" />
+              </g>
+              <g transform="translate(434,610)">
+                <circle r="46" fill="url(#cvOr)" />
+                <ellipse cx="-16" cy="-18" rx="14" ry="10" fill="#fff" opacity="0.34" transform="rotate(-28)" />
+                <path d="M0-46c0-9 7-14 17-15 1 10-6 16-17 16z" fill="#3f7654" />
+              </g>
+              <g transform="translate(575,618)">
+                <circle r="38" fill="url(#cvOr)" />
+                <ellipse cx="-13" cy="-14" rx="11" ry="8" fill="#fff" opacity="0.3" transform="rotate(-28)" />
+              </g>
+              <g transform="translate(710,622)">
+                <circle r="34" fill="url(#cvOrDim)" />
+                <ellipse cx="-11" cy="-12" rx="10" ry="7" fill="#fff" opacity="0.24" transform="rotate(-28)" />
+              </g>
+              <g transform="translate(845,616)">
+                <circle r="40" fill="url(#cvOr)" />
+                <ellipse cx="-14" cy="-16" rx="12" ry="9" fill="#fff" opacity="0.32" transform="rotate(-28)" />
+                <path d="M0-40c0-8 6-13 15-14 1 9-5 15-15 15z" fill="#3f7654" />
+              </g>
+            </g>
+
+            <!-- إطار تحديد -->
+            <g stroke="#e8892d" stroke-width="5" fill="none" opacity="0.95">
+              <path d="M382 556h-26v26M486 556h26v26M382 666h-26v-26M486 666h26v-26" />
+            </g>
+          </svg>
+          <div class="cover-art__veil"></div>
+        </div>
+
+        <div class="slide__inner cover__inner">
+          <header class="cover__top" data-reveal="fade" style="--rd: 120ms">
+            <span class="brand">
+              <svg class="brand__mark" viewBox="0 0 120 120" role="img" aria-label="شعار جامعة صعدة"><use href="#logo-saada" /></svg>
+              <span class="brand__text">
+                <b class="brand__name">جامعة صعدة</b>
+                <span class="brand__dept">تخصص نظم المعلومات</span>
+              </span>
+            </span>
+            <span class="pill pill--orange">مشروع تخرج</span>
+          </header>
+
+          <div class="cover__main">
+            <h1 class="cover__title" data-reveal="mask" style="--rd: 300ms">
+              نظام ذكي متكامل لفحص وتصنيف وفرز ثمار
+              <span class="accent">البرتقال</span> آليا في خطوط الإنتاج
+              باستخدام الرؤية الحاسوبية والذكاء الاصطناعي
+            </h1>
+            <p class="cover__tag" data-reveal style="--rd: 520ms">
+              منظومة ذكية تجمع الفحص البصري والتحكم الآلي وإدارة البيانات لتحسين
+              جودة البرتقال ورفع كفاءة عمليات الفرز في خطوط الإنتاج
+            </p>
+          </div>
+
+          <footer class="cover__meta" data-reveal style="--rd: 700ms">
+            <div class="meta-col">
+              <span class="meta-col__label">إعداد الطلاب</span>
+              <ul class="meta-col__list">
+                <li>م/ عمران عبدالرحمن علي الشبح</li>
+                <li>م/ عبدالرزاق علي عيظه شثان</li>
+                <li>م/ يعقوب عمران قايد شويط</li>
+              </ul>
+            </div>
+            <div class="meta-col">
+              <span class="meta-col__label">إشراف</span>
+              <ul class="meta-col__list">
+                <li>أ.م/ بكر الزني</li>
+                <li>أ.م/ شاجع أبو علياء</li>
+              </ul>
+            </div>
+            <div class="meta-col meta-col--year">
+              <span class="meta-col__label">العام الجامعي</span>
+              <span class="meta-col__year u-num">2026–2027</span>
+            </div>
+          </footer>
+        </div>
+      </section>
+
+      <!-- ==================================================
+           02 — المقدمة
+           ================================================== -->
+      <section class="slide slide--white slide--intro" data-tr="mask" data-title="المقدمة" aria-label="المقدمة">
+        <div class="bg" aria-hidden="true">
+          <div class="bg-glow anim-drift" style="width: 46vw; height: 46vw; inset-inline-start: -14vw; top: -16vh; background: rgba(220, 232, 221, 0.75)"></div>
+          <div class="bg-glow" style="width: 26vw; height: 26vw; inset-inline-end: 6vw; bottom: -10vh; background: rgba(232, 137, 45, 0.16)"></div>
+          <div class="bg-grain"></div>
+        </div>
+
+        <div class="slide__inner intro__inner">
+          <div class="intro__text">
+            <div class="s-head">
+              <span class="s-kicker" data-reveal="fade" style="--rd: 80ms">الشريحة الأولى</span>
+              <h2 class="s-title" data-reveal="mask" style="--rd: 200ms">المقدمة</h2>
+            </div>
+            <div class="intro__paras s-body">
+              <p data-reveal style="--rd: 420ms">
+                تمثل جودة ثمار البرتقال ركيزة أساسية في مصانع العصائر ومراكز
+                التجهيز، وتنعكس مباشرة على جودة المنتج النهائي وعلى ثقة السوق به.
+              </p>
+              <p data-reveal style="--rd: 560ms">
+                ما زال جزء كبير من عمليات الفرز يعتمد على العامل البشري، وتتأثر
+                دقة القرار بسرعة الخط وطول ساعات العمل والإرهاق، فتختلف النتيجة من
+                عامل إلى آخر ومن ساعة إلى أخرى.
+              </p>
+              <p data-reveal style="--rd: 700ms">
+                أتاح تطور الرؤية الحاسوبية والذكاء الاصطناعي فحص الثمار أثناء
+                حركتها بدقة ثابتة، ومن هنا جاء المشروع ليدمج الكاميرا والذكاء
+                الاصطناعي والتحكم الآلي ونظام المعلومات داخل منظومة واحدة.
+              </p>
+            </div>
+          </div>
+
+          <figure class="intro__art" data-reveal="scale" style="--rd: 320ms" aria-hidden="true">
+            <svg viewBox="0 0 520 560" class="intro__svg">
+              <defs>
+                <linearGradient id="inCard" x1="0" y1="0" x2="0.6" y2="1">
+                  <stop offset="0" stop-color="#1c4a37" />
+                  <stop offset="1" stop-color="#0f2a20" />
+                </linearGradient>
+                <radialGradient id="inOr" cx="0.34" cy="0.28" r="0.8">
+                  <stop offset="0" stop-color="#ffc06a" />
+                  <stop offset="0.45" stop-color="#ef9330" />
+                  <stop offset="1" stop-color="#bf631a" />
+                </radialGradient>
+                <linearGradient id="inScan" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0" stop-color="#e8892d" stop-opacity="0" />
+                  <stop offset="0.5" stop-color="#e8892d" stop-opacity="0.9" />
+                  <stop offset="1" stop-color="#e8892d" stop-opacity="0" />
+                </linearGradient>
+              </defs>
+              <rect x="10" y="10" width="500" height="540" rx="40" fill="url(#inCard)" />
+              <g opacity="0.14" stroke="#dce8dd" stroke-width="1.6">
+                <path d="M10 130h500M10 250h500M10 370h500M10 470h500M140 10v540M270 10v540M400 10v540" />
+              </g>
+              <g transform="translate(260,268)">
+                <circle r="132" fill="none" stroke="#3f7654" stroke-width="2" opacity="0.55" />
+                <circle r="168" fill="none" stroke="#3f7654" stroke-width="1.4" opacity="0.3" />
+                <circle r="112" fill="url(#inOr)" />
+                <ellipse cx="-40" cy="-44" rx="34" ry="22" fill="#fff" opacity="0.3" transform="rotate(-30)" />
+                <g opacity="0.24" fill="#8a4a10">
+                  <circle cx="30" cy="20" r="4" /><circle cx="56" cy="-16" r="3.4" /><circle cx="-8" cy="52" r="3.6" />
+                  <circle cx="-52" cy="18" r="3.2" /><circle cx="14" cy="-58" r="3.4" /><circle cx="72" cy="42" r="3" />
+                </g>
+                <path d="M0-112c0-22 16-35 42-38 3 25-15 40-42 40z" fill="#3f7654" />
+              </g>
+              <g stroke="#e8892d" stroke-width="5" fill="none" stroke-linecap="round">
+                <path d="M118 148h-24v-24M402 148h24v-24M118 388h-24v24M402 388h24v24" />
+              </g>
+              <rect x="94" y="240" width="332" height="6" rx="3" fill="url(#inScan)" class="intro-scan" />
+              <g transform="translate(60,470)">
+                <rect width="400" height="52" rx="18" fill="#f6f1e6" opacity="0.1" />
+                <circle cx="34" cy="26" r="12" fill="#e8892d" />
+                <rect x="60" y="16" width="150" height="9" rx="4.5" fill="#dce8dd" opacity="0.6" />
+                <rect x="60" y="32" width="230" height="7" rx="3.5" fill="#dce8dd" opacity="0.32" />
+                <rect x="316" y="18" width="66" height="18" rx="9" fill="#3f7654" />
+              </g>
+            </svg>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ==================================================
+           03 — المشكلة والحلول
+           ================================================== -->
+      <section class="slide slide--cream slide--compare" data-tr="slide" data-title="المشكلة والحلول" aria-label="المشكلة والحلول">
+        <div class="bg" aria-hidden="true">
+          <div class="bg-glow" style="width: 34vw; height: 34vw; inset-inline-end: -8vw; top: -12vh; background: rgba(232, 137, 45, 0.14)"></div>
+          <div class="bg-glow" style="width: 30vw; height: 30vw; inset-inline-start: -8vw; bottom: -12vh; background: rgba(63, 118, 84, 0.16)"></div>
+        </div>
+
+        <div class="slide__inner compare__inner">
+          <div class="s-head compare__head">
+            <span class="s-kicker" data-reveal="fade" style="--rd: 80ms">تشخيص الواقع</span>
+            <h2 class="s-title" data-reveal="mask" style="--rd: 180ms">المشكلة والحلول</h2>
+          </div>
+
+          <div class="compare" data-reveal="fade" style="--rd: 320ms">
+            <div class="compare__labels">
+              <span class="compare__label compare__label--problem">
+                <svg class="compare__label-ic" viewBox="0 0 24 24"><use href="#ic-alert" /></svg>
+                المشكلة
+              </span>
+              <span class="compare__spacer" aria-hidden="true"></span>
+              <span class="compare__label compare__label--solution">
+                <svg class="compare__label-ic" viewBox="0 0 24 24"><use href="#ic-check" /></svg>
+                الحل
+              </span>
+            </div>
+
+            <ul class="compare__rows">
+              <li class="cmp-row" style="--rd: 400ms" data-reveal="right">
+                <span class="cmp-cell cmp-cell--p">الفحص اليدوي المستمر</span>
+                <span class="cmp-link" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-arrow" /></svg></span>
+                <span class="cmp-cell cmp-cell--s">الفحص الآلي بالكاميرا</span>
+              </li>
+              <li class="cmp-row" style="--rd: 470ms" data-reveal="right">
+                <span class="cmp-cell cmp-cell--p">اختلاف قرار العامل</span>
+                <span class="cmp-link" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-arrow" /></svg></span>
+                <span class="cmp-cell cmp-cell--s">نموذج تصنيف موحد</span>
+              </li>
+              <li class="cmp-row" style="--rd: 540ms" data-reveal="right">
+                <span class="cmp-cell cmp-cell--p">مرور ثمار تالفة</span>
+                <span class="cmp-link" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-arrow" /></svg></span>
+                <span class="cmp-cell cmp-cell--s">كشفها واستبعادها</span>
+              </li>
+              <li class="cmp-row" style="--rd: 610ms" data-reveal="right">
+                <span class="cmp-cell cmp-cell--p">صعوبة متابعة الثمرة</span>
+                <span class="cmp-link" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-arrow" /></svg></span>
+                <span class="cmp-cell cmp-cell--s">تتبعها أثناء المرور</span>
+              </li>
+              <li class="cmp-row" style="--rd: 680ms" data-reveal="right">
+                <span class="cmp-cell cmp-cell--p">غياب تسجيل منظم</span>
+                <span class="cmp-link" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-arrow" /></svg></span>
+                <span class="cmp-cell cmp-cell--s">حفظ النتائج</span>
+              </li>
+              <li class="cmp-row" style="--rd: 750ms" data-reveal="right">
+                <span class="cmp-cell cmp-cell--p">ضعف التقارير</span>
+                <span class="cmp-link" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-arrow" /></svg></span>
+                <span class="cmp-cell cmp-cell--s">لوحة متابعة وتقارير</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================
+           04 — أسباب اختيار المشروع
+           ================================================== -->
+      <section class="slide slide--white slide--reasons" data-tr="fade" data-title="أسباب الاختيار" aria-label="أسباب اختيار المشروع">
+        <div class="bg" aria-hidden="true">
+          <div class="bg-glow anim-drift" style="width: 40vw; height: 40vw; inset-inline-end: -12vw; bottom: -18vh; background: rgba(220, 232, 221, 0.85)"></div>
+          <div class="bg-grain"></div>
+        </div>
+
+        <div class="slide__inner reasons__inner">
+          <div class="reasons__head">
+            <div class="s-head">
+              <span class="s-kicker" data-reveal="fade" style="--rd: 80ms">لماذا هذا المشروع</span>
+              <h2 class="s-title" data-reveal="mask" style="--rd: 180ms">أسباب اختيار المشروع</h2>
+            </div>
+            <p class="s-lead reasons__lead" data-reveal style="--rd: 320ms">
+              اخترنا فكرة قريبة من واقع خطوط الإنتاج، وتخدم التخصص، وقابلة للتنفيذ
+              كنموذج أولي.
+            </p>
+          </div>
+
+          <ul class="reasons__grid">
+            <li class="reason" data-reveal="scale" style="--rd: 420ms">
+              <span class="reason__num u-num">01</span>
+              <span class="reason__text">مشكلة عملية حقيقية في مراكز التجهيز</span>
+            </li>
+            <li class="reason" data-reveal="scale" style="--rd: 480ms">
+              <span class="reason__num u-num">02</span>
+              <span class="reason__text">استخدام الذكاء الاصطناعي في بيئة صناعية</span>
+            </li>
+            <li class="reason" data-reveal="scale" style="--rd: 540ms">
+              <span class="reason__num u-num">03</span>
+              <span class="reason__text">دمج البرمجيات مع التحكم الآلي</span>
+            </li>
+            <li class="reason" data-reveal="scale" style="--rd: 600ms">
+              <span class="reason__num u-num">04</span>
+              <span class="reason__text">مناسب لتخصص نظم المعلومات</span>
+            </li>
+            <li class="reason" data-reveal="scale" style="--rd: 660ms">
+              <span class="reason__num u-num">05</span>
+              <span class="reason__text">إمكانية تنفيذ نموذج أولي عملي</span>
+            </li>
+            <li class="reason" data-reveal="scale" style="--rd: 720ms">
+              <span class="reason__num u-num">06</span>
+              <span class="reason__text">قابلية التطوير والتوسع مستقبلا</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ==================================================
+           05 — أهداف المشروع
+           ================================================== -->
+      <section class="slide slide--dark slide--goals" data-tr="depth" data-title="أهداف المشروع" aria-label="أهداف المشروع">
+        <div class="bg" aria-hidden="true">
+          <div class="bg-glow anim-drift" style="width: 44vw; height: 44vw; inset-inline-start: -14vw; top: -14vh; background: rgba(63, 118, 84, 0.55)"></div>
+          <div class="bg-glow" style="width: 26vw; height: 26vw; inset-inline-end: 10vw; bottom: -10vh; background: rgba(232, 137, 45, 0.22)"></div>
+          <div class="bg-grain"></div>
+        </div>
+
+        <div class="slide__inner goals__inner">
+          <div class="s-head">
+            <span class="s-kicker" data-reveal="fade" style="--rd: 80ms">الوجهة</span>
+            <h2 class="s-title" data-reveal="mask" style="--rd: 180ms">أهداف المشروع</h2>
+          </div>
+
+          <div class="goals__body">
+            <article class="goal-main" data-reveal="right" style="--rd: 340ms">
+              <span class="goal-main__label">الهدف العام</span>
+              <p class="goal-main__text">
+                تطوير نظام ذكي متكامل لفحص وتصنيف وفرز ثمار البرتقال آليا أثناء
+                مرورها على خط الإنتاج، مع تسجيل النتائج وتوفير أدوات متابعة
+                للإدارة.
+              </p>
+              <span class="goal-main__mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><use href="#ic-orange" /></svg>
+              </span>
+            </article>
+
+            <ol class="goals__list">
+              <li class="goal-item" data-reveal="left" style="--rd: 440ms"><span class="goal-item__dot u-num">1</span><span>اكتشاف الثمار أثناء المرور</span></li>
+              <li class="goal-item" data-reveal="left" style="--rd: 500ms"><span class="goal-item__dot u-num">2</span><span>تحليل الصورة</span></li>
+              <li class="goal-item" data-reveal="left" style="--rd: 560ms"><span class="goal-item__dot u-num">3</span><span>تصنيف الحالة</span></li>
+              <li class="goal-item" data-reveal="left" style="--rd: 620ms"><span class="goal-item__dot u-num">4</span><span>اتخاذ قرار القبول أو الاستبعاد</span></li>
+              <li class="goal-item" data-reveal="left" style="--rd: 680ms"><span class="goal-item__dot u-num">5</span><span>تشغيل آلية الفرز</span></li>
+              <li class="goal-item" data-reveal="left" style="--rd: 740ms"><span class="goal-item__dot u-num">6</span><span>حفظ النتائج وعرضها</span></li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================
+           06 — أهمية المشروع
+           ================================================== -->
+      <section class="slide slide--cream slide--value" data-tr="slide" data-title="أهمية المشروع" aria-label="أهمية المشروع">
+        <div class="bg" aria-hidden="true">
+          <div class="bg-glow" style="width: 34vw; height: 34vw; inset-inline-start: 30vw; top: -18vh; background: rgba(232, 137, 45, 0.14)"></div>
+        </div>
+
+        <div class="slide__inner value__inner">
+          <div class="s-head">
+            <span class="s-kicker" data-reveal="fade" style="--rd: 80ms">القيمة المضافة</span>
+            <h2 class="s-title" data-reveal="mask" style="--rd: 180ms">أهمية المشروع</h2>
+          </div>
+
+          <ul class="value__grid">
+            <li class="value-card" data-reveal style="--rd: 360ms">
+              <span class="icon-badge icon-badge--orange"><svg viewBox="0 0 24 24"><use href="#ic-shield" /></svg></span>
+              <h3 class="value-card__title">الجودة</h3>
+              <p class="value-card__text">فحص موحد لكل ثمرة يرفع ثبات النتيجة ويقلل الخطأ.</p>
+            </li>
+            <li class="value-card" data-reveal style="--rd: 440ms">
+              <span class="icon-badge"><svg viewBox="0 0 24 24"><use href="#ic-belt" /></svg></span>
+              <h3 class="value-card__title">الإنتاج</h3>
+              <p class="value-card__text">فرز أسرع أثناء الحركة دون إيقاف خط الإنتاج.</p>
+            </li>
+            <li class="value-card" data-reveal style="--rd: 520ms">
+              <span class="icon-badge"><svg viewBox="0 0 24 24"><use href="#ic-chart" /></svg></span>
+              <h3 class="value-card__title">الإدارة</h3>
+              <p class="value-card__text">بيانات وتقارير واضحة تدعم قرار المشرف والإدارة.</p>
+            </li>
+            <li class="value-card" data-reveal style="--rd: 600ms">
+              <span class="icon-badge icon-badge--orange"><svg viewBox="0 0 24 24"><use href="#ic-factory" /></svg></span>
+              <h3 class="value-card__title">القطاع المحلي</h3>
+              <p class="value-card__text">حل عملي يناسب المنشآت الصغيرة والمتوسطة.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ==================================================
+           07 — الفئات المستفيدة
+           ================================================== -->
+      <section class="slide slide--white slide--users" data-tr="fade" data-title="الفئات المستفيدة" aria-label="الفئات المستفيدة">
+        <div class="bg" aria-hidden="true">
+          <div class="bg-glow anim-drift" style="width: 38vw; height: 38vw; inset-inline-start: -12vw; bottom: -16vh; background: rgba(220, 232, 221, 0.9)"></div>
+          <div class="bg-grain"></div>
+        </div>
+
+        <div class="slide__inner users__inner">
+          <div class="users__head">
+            <div class="s-head">
+              <span class="s-kicker" data-reveal="fade" style="--rd: 80ms">من يستفيد</span>
+              <h2 class="s-title" data-reveal="mask" style="--rd: 180ms">الفئات المستفيدة</h2>
+            </div>
+            <p class="s-lead" data-reveal style="--rd: 300ms">
+              يخدم النظام سلسلة العمل كاملة من دخول الثمار حتى تقارير الإدارة.
+            </p>
+          </div>
+
+          <ul class="users__grid">
+            <li class="user-card" data-reveal="scale" style="--rd: 400ms">
+              <span class="icon-badge"><svg viewBox="0 0 24 24"><use href="#ic-factory" /></svg></span>
+              <span class="user-card__name">مصانع العصائر</span>
+            </li>
+            <li class="user-card" data-reveal="scale" style="--rd: 450ms">
+              <span class="icon-badge"><svg viewBox="0 0 24 24"><use href="#ic-crate" /></svg></span>
+              <span class="user-card__name">مراكز تجهيز الفواكه</span>
+            </li>
+            <li class="user-card" data-reveal="scale" style="--rd: 500ms">
+              <span class="icon-badge"><svg viewBox="0 0 24 24"><use href="#ic-belt" /></svg></span>
+              <span class="user-card__name">محطات الفرز والتعبئة</span>
+            </li>
+            <li class="user-card" data-reveal="scale" style="--rd: 550ms">
+              <span class="icon-badge icon-badge--orange"><svg viewBox="0 0 24 24"><use href="#ic-shield" /></svg></span>
+              <span class="user-card__name">مشرفو الجودة</span>
+            </li>
+            <li class="user-card" data-reveal="scale" style="--rd: 600ms">
+              <span class="icon-badge icon-badge--orange"><svg viewBox="0 0 24 24"><use href="#ic-worker" /></svg></span>
+              <span class="user-card__name">مشغلو خطوط الإنتاج</span>
+            </li>
+            <li class="user-card" data-reveal="scale" style="--rd: 650ms">
+              <span class="icon-badge icon-badge--orange"><svg viewBox="0 0 24 24"><use href="#ic-chart" /></svg></span>
+              <span class="user-card__name">الإدارة</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ==================================================
+           08 — نطاق المشروع
+           ================================================== -->
+      <section class="slide slide--cream slide--scope" data-tr="mask" data-title="نطاق المشروع" aria-label="نطاق المشروع">
+        <div class="bg" aria-hidden="true">
+          <div class="bg-glow" style="width: 30vw; height: 30vw; inset-inline-end: -8vw; top: -10vh; background: rgba(63, 118, 84, 0.16)"></div>
+        </div>
+
+        <div class="slide__inner scope__inner">
+          <div class="s-head">
+            <span class="s-kicker" data-reveal="fade" style="--rd: 80ms">الحدود</span>
+            <h2 class="s-title" data-reveal="mask" style="--rd: 180ms">نطاق المشروع</h2>
+          </div>
+
+          <div class="scope__grid">
+            <section class="scope-col scope-col--in" data-reveal="right" style="--rd: 340ms">
+              <h3 class="scope-col__title"><span class="scope-dot scope-dot--in" aria-hidden="true"></span>يشمل</h3>
+              <ul class="scope-col__list">
+                <li>البرتقال</li><li>كاميرا واحدة</li><li>سير ناقل</li><li>تصنيف بصري</li>
+                <li>آلية استبعاد</li><li>لوحة متابعة</li><li>قاعدة بيانات</li><li>تقارير</li>
+              </ul>
+            </section>
+
+            <section class="scope-col scope-col--cls" data-reveal="fade" style="--rd: 440ms">
+              <h3 class="scope-col__title"><span class="scope-dot scope-dot--cls" aria-hidden="true"></span>فئات التصنيف</h3>
+              <ul class="scope-col__list scope-col__list--chips">
+                <li class="chip chip--ok">سليمة وناضجة</li>
+                <li class="chip chip--warn">غير ناضجة</li>
+                <li class="chip chip--warn">صغيرة</li>
+                <li class="chip chip--bad">تالفة</li>
+                <li class="chip chip--bad">مصابة بعيب أو مرض ظاهري</li>
+              </ul>
+            </section>
+
+            <section class="scope-col scope-col--out" data-reveal="left" style="--rd: 540ms">
+              <h3 class="scope-col__title"><span class="scope-dot scope-dot--out" aria-hidden="true"></span>خارج النطاق</h3>
+              <ul class="scope-col__list">
+                <li>الأمراض الداخلية</li><li>كل أنواع الفواكه</li><li>الكاميرات الطيفية</li>
+                <li>عدة خطوط إنتاج</li><li>مصنع صناعي كامل</li>
+              </ul>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================
+           09 — فكرة المشروع (مشهد سينمائي)
+           ================================================== -->
+      <section class="slide slide--dark slide--cinema" data-tr="zoom" data-title="فكرة المشروع" aria-label="فكرة المشروع">
+        <div class="bg" aria-hidden="true">
+          <div class="bg-glow" style="width: 48vw; height: 48vw; inset-inline-start: 26vw; top: -20vh; background: rgba(63, 118, 84, 0.5)"></div>
+          <div class="bg-glow" style="width: 30vw; height: 30vw; inset-inline-end: -8vw; bottom: -14vh; background: rgba(232, 137, 45, 0.2)"></div>
+        </div>
+
+        <div class="slide__inner cinema__inner">
+          <header class="cinema__head">
+            <div class="s-head">
+              <span class="s-kicker" data-reveal="fade" style="--rd: 60ms">جوهر المشروع</span>
+              <h2 class="s-title" data-reveal="mask" style="--rd: 160ms">فكرة المشروع</h2>
+            </div>
+            <div class="cinema__tools" data-reveal="fade" style="--rd: 300ms">
+              <span class="cinema__caption">محاكاة توضيحية لآلية النظام</span>
+              <button type="button" class="btn-ghost" id="cinemaReplay">
+                <svg viewBox="0 0 24 24"><use href="#ic-restart" /></svg>
+                <span>إعادة المشهد</span>
+              </button>
+            </div>
+          </header>
+
+          <figure class="cinema__stage" data-reveal="scale" style="--rd: 380ms">
+            <canvas id="cinemaCanvas" aria-label="مشهد متحرك يوضح فحص وتصنيف وفرز ثمار البرتقال"></canvas>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ==================================================
+           10 — آلية عمل النظام (تفاعلية)
+           ================================================== -->
+      <section class="slide slide--white slide--flow" data-tr="slide" data-title="آلية عمل النظام" aria-label="آلية عمل النظام">
+        <div class="bg" aria-hidden="true">
+          <div class="bg-glow" style="width: 40vw; height: 40vw; inset-inline-end: -14vw; top: -20vh; background: rgba(220, 232, 221, 0.9)"></div>
+          <div class="bg-grain"></div>
+        </div>
+
+        <div class="slide__inner flow__inner">
+          <header class="flow__head">
+            <div class="s-head">
+              <span class="s-kicker" data-reveal="fade" style="--rd: 60ms">خطوة بخطوة</span>
+              <h2 class="s-title" data-reveal="mask" style="--rd: 160ms">آلية عمل النظام</h2>
+            </div>
+            <div class="flow__controls" data-reveal="fade" style="--rd: 300ms" role="group" aria-label="أدوات التحكم بالعرض">
+              <button type="button" class="btn-ctl" id="flowPrev" aria-label="الخطوة السابقة"><svg viewBox="0 0 24 24" style="transform: scaleX(-1)"><use href="#ic-arrow" /></svg></button>
+              <button type="button" class="btn-ctl btn-ctl--main" id="flowPlay" aria-label="تشغيل"><svg viewBox="0 0 24 24"><use href="#ic-play" /></svg><span id="flowPlayLabel">تشغيل</span></button>
+              <button type="button" class="btn-ctl" id="flowNext" aria-label="الخطوة التالية"><svg viewBox="0 0 24 24"><use href="#ic-arrow" /></svg></button>
+              <button type="button" class="btn-ctl" id="flowRestart" aria-label="إعادة"><svg viewBox="0 0 24 24"><use href="#ic-restart" /></svg></button>
+            </div>
+          </header>
+
+          <div class="flow__track" data-reveal="fade" style="--rd: 400ms">
+            <div class="flow__rail" aria-hidden="true"><span class="flow__rail-fill" id="flowRailFill"></span></div>
+            <span class="flow__fruit" id="flowFruit" aria-hidden="true">
+              <svg viewBox="0 0 60 60">
+                <defs>
+                  <radialGradient id="fwOr" cx="0.34" cy="0.28" r="0.8">
+                    <stop offset="0" stop-color="#ffc06a" /><stop offset="0.5" stop-color="#ef9330" /><stop offset="1" stop-color="#bf631a" />
+                  </radialGradient>
+                </defs>
+                <circle cx="30" cy="32" r="22" fill="url(#fwOr)" />
+                <ellipse cx="21" cy="23" rx="7" ry="4.6" fill="#fff" opacity="0.35" transform="rotate(-30 21 23)" />
+                <path d="M30 10c0-4 3-6.5 8-7 .6 4.8-3 7.4-8 7.4z" fill="#3f7654" />
+              </svg>
+            </span>
+            <ol class="flow__steps" id="flowSteps">
+              <li class="fstep" data-step="1"><span class="fstep__num u-num">1</span><span class="fstep__ic" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-orange" /></svg></span><span class="fstep__label">دخول البرتقال</span></li>
+              <li class="fstep" data-step="2"><span class="fstep__num u-num">2</span><span class="fstep__ic" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-sensor" /></svg></span><span class="fstep__label">اكتشاف الثمرة</span></li>
+              <li class="fstep" data-step="3"><span class="fstep__num u-num">3</span><span class="fstep__ic" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-camera" /></svg></span><span class="fstep__label">التقاط الصورة</span></li>
+              <li class="fstep" data-step="4"><span class="fstep__num u-num">4</span><span class="fstep__ic" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-scan" /></svg></span><span class="fstep__label">تحليل الصورة</span></li>
+              <li class="fstep" data-step="5"><span class="fstep__num u-num">5</span><span class="fstep__ic" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-brain" /></svg></span><span class="fstep__label">تصنيف الحالة</span></li>
+              <li class="fstep" data-step="6"><span class="fstep__num u-num">6</span><span class="fstep__ic" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-check" /></svg></span><span class="fstep__label">اتخاذ القرار</span></li>
+              <li class="fstep" data-step="7"><span class="fstep__num u-num">7</span><span class="fstep__ic" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-arm" /></svg></span><span class="fstep__label">تشغيل آلية الفرز</span></li>
+              <li class="fstep" data-step="8"><span class="fstep__num u-num">8</span><span class="fstep__ic" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-db" /></svg></span><span class="fstep__label">حفظ النتيجة</span></li>
+              <li class="fstep" data-step="9"><span class="fstep__num u-num">9</span><span class="fstep__ic" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-monitor" /></svg></span><span class="fstep__label">تحديث لوحة المتابعة</span></li>
+            </ol>
+          </div>
+
+          <div class="flow__detail" data-reveal style="--rd: 500ms">
+            <span class="flow__detail-badge"><span class="u-num" id="flowBadgeNum">1</span></span>
+            <div class="flow__detail-text">
+              <h3 class="flow__detail-title" id="flowTitle">دخول البرتقال</h3>
+              <p class="flow__detail-desc" id="flowDesc">تدخل الثمار إلى السير الناقل بتدفق منتظم يسمح بفصلها عن بعضها قبل الفحص.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================
+           11 — مكونات النظام
+           ================================================== -->
+      <section class="slide slide--cream slide--parts" data-tr="depth" data-title="مكونات النظام" aria-label="مكونات النظام">
+        <div class="bg" aria-hidden="true">
+          <div class="bg-glow" style="width: 32vw; height: 32vw; inset-inline-start: -10vw; top: -14vh; background: rgba(232, 137, 45, 0.12)"></div>
+        </div>
+
+        <div class="slide__inner parts__inner">
+          <div class="s-head">
+            <span class="s-kicker" data-reveal="fade" style="--rd: 80ms">البنية المادية والبرمجية</span>
+            <h2 class="s-title" data-reveal="mask" style="--rd: 180ms">مكونات النظام</h2>
+          </div>
+
+          <ul class="parts__grid" id="partsGrid">
+            <!-- تبنى البطاقات من js/parts.js لتقليل تكرار الوسوم -->
+          </ul>
+        </div>
+      </section>
+
+      <!-- ==================================================
+           12 — التقنيات المستخدمة
+           ================================================== -->
+      <section class="slide slide--dark slide--tech" data-tr="fade" data-title="التقنيات المستخدمة" aria-label="التقنيات المستخدمة">
+        <div class="bg" aria-hidden="true">
+          <div class="bg-glow anim-drift" style="width: 44vw; height: 44vw; inset-inline-end: -14vw; top: -18vh; background: rgba(63, 118, 84, 0.5)"></div>
+          <div class="bg-glow" style="width: 24vw; height: 24vw; inset-inline-start: 6vw; bottom: -12vh; background: rgba(232, 137, 45, 0.2)"></div>
+          <div class="bg-grain"></div>
+        </div>
+
+        <div class="slide__inner tech__inner">
+          <header class="tech__head">
+            <div class="s-head">
+              <span class="s-kicker" data-reveal="fade" style="--rd: 60ms">المعمارية</span>
+              <h2 class="s-title" data-reveal="mask" style="--rd: 160ms">التقنيات المستخدمة</h2>
+            </div>
+            <p class="tech__note" data-reveal="fade" style="--rd: 280ms">
+              يحدد النموذج النهائي بعد المقارنة والاختبار
+            </p>
+          </header>
+
+          <div class="tech__arch">
+            <article class="arch-box arch-box--main" data-reveal="right" style="--rd: 380ms">
+              <span class="arch-box__head">
+                <span class="icon-badge"><svg viewBox="0 0 24 24"><use href="#ic-code" /></svg></span>
+                <span class="arch-box__titles">
+                  <b class="arch-box__title">النظام الرئيسي</b>
+                  <span class="arch-box__tech u-num">ASP.NET Core · C#</span>
+                </span>
+              </span>
+              <ul class="arch-box__list">
+                <li>منطق النظام</li><li>المستخدمين</li><li>الإدارة</li><li>التقارير</li><li>الربط بقاعدة البيانات</li>
+              </ul>
+              <span class="arch-box__foot">واجهة النظام: <b class="u-num">ASP.NET Core Web</b></span>
+            </article>
+
+            <div class="arch-link" data-reveal="scale" style="--rd: 520ms" aria-label="ربط عبر REST API">
+              <span class="arch-link__badge"><svg viewBox="0 0 24 24"><use href="#ic-api" /></svg><b class="u-num">REST API</b></span>
+              <svg class="arch-link__wire" viewBox="0 0 200 40" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M8 20h184" fill="none" stroke="currentColor" stroke-width="2.4" stroke-dasharray="10 8" class="arch-wire-dash" />
+                <path d="M18 12 8 20l10 8M182 12l10 8-10 8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+
+            <article class="arch-box arch-box--ai" data-reveal="left" style="--rd: 380ms">
+              <span class="arch-box__head">
+                <span class="icon-badge icon-badge--orange"><svg viewBox="0 0 24 24"><use href="#ic-brain" /></svg></span>
+                <span class="arch-box__titles">
+                  <b class="arch-box__title">خدمة الذكاء الاصطناعي</b>
+                  <span class="arch-box__tech u-num">Python · Web API</span>
+                </span>
+              </span>
+              <ul class="arch-box__list">
+                <li>معالجة الصور بـ <span class="u-num">OpenCV</span></li>
+                <li>نموذج رؤية <span class="u-num">YOLO</span> أو بديل مناسب</li>
+                <li>إرجاع الفئة ودرجة الثقة</li>
+              </ul>
+              <span class="arch-box__foot">واجهة تدريب مستقلة: <b class="u-num">Python Web Interface</b></span>
+            </article>
+
+            <article class="arch-box arch-box--db" data-reveal style="--rd: 620ms">
+              <span class="icon-badge"><svg viewBox="0 0 24 24"><use href="#ic-db" /></svg></span>
+              <span class="arch-box__titles">
+                <b class="arch-box__title">قاعدة البيانات</b>
+                <span class="arch-box__tech u-num">Microsoft SQL Server</span>
+              </span>
+            </article>
+
+            <article class="arch-box arch-box--train" data-reveal style="--rd: 680ms">
+              <b class="arch-box__title">مهام واجهة التدريب</b>
+              <ul class="arch-box__list arch-box__list--inline">
+                <li>رفع البيانات</li><li>إعداد التدريب</li><li>تشغيل التدريب</li>
+                <li>عرض تقدم التدريب</li><li>إدارة إصدارات النموذج</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================
+           13 — النتائج المتوقعة والتطوير المستقبلي
+           ================================================== -->
+      <section class="slide slide--white slide--results" data-tr="slide" data-title="النتائج والتطوير" aria-label="النتائج المتوقعة والتطوير المستقبلي">
+        <div class="bg" aria-hidden="true">
+          <div class="bg-glow anim-drift" style="width: 36vw; height: 36vw; inset-inline-start: 40vw; bottom: -20vh; background: rgba(220, 232, 221, 0.9)"></div>
+          <div class="bg-grain"></div>
+        </div>
+
+        <div class="slide__inner results__inner">
+          <div class="s-head">
+            <span class="s-kicker" data-reveal="fade" style="--rd: 80ms">ما بعد التنفيذ</span>
+            <h2 class="s-title" data-reveal="mask" style="--rd: 180ms">النتائج المتوقعة والتطوير المستقبلي</h2>
+          </div>
+
+          <div class="results__grid">
+            <section class="res-col res-col--now" data-reveal="right" style="--rd: 340ms">
+              <h3 class="res-col__title">
+                <span class="icon-badge"><svg viewBox="0 0 24 24"><use href="#ic-check" /></svg></span>
+                النتائج المتوقعة
+              </h3>
+              <ul class="res-col__list">
+                <li>نموذج أولي متكامل</li><li>فحص البرتقال أثناء الحركة</li><li>تصنيف الحالة</li>
+                <li>قرار الفرز</li><li>تشغيل آلية الاستبعاد</li><li>تسجيل النتائج</li><li>لوحة متابعة</li>
+              </ul>
+            </section>
+
+            <section class="res-col res-col--next" data-reveal="left" style="--rd: 440ms">
+              <h3 class="res-col__title">
+                <span class="icon-badge icon-badge--orange"><svg viewBox="0 0 24 24"><use href="#ic-arm" /></svg></span>
+                التطوير المستقبلي
+              </h3>
+              <ul class="res-col__list">
+                <li>أنواع فواكه إضافية</li><li>كاميرات متعددة</li><li>فئات جودة أكثر</li>
+                <li>وحدة تحكم صناعية <span class="u-num">PLC</span></li><li>خطوط فرز متعددة</li><li>ربط مع خطوط إنتاج حقيقية</li>
+              </ul>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================
+           14 — الخاتمة والشكر
+           ================================================== -->
+      <section class="slide slide--dark slide--end" data-tr="zoom" data-title="الخاتمة والشكر" aria-label="الخاتمة والشكر">
+        <div class="bg" aria-hidden="true">
+          <div class="bg-glow anim-drift" style="width: 52vw; height: 52vw; inset-inline-start: 24vw; top: -24vh; background: rgba(63, 118, 84, 0.45)"></div>
+          <div class="bg-glow" style="width: 28vw; height: 28vw; inset-inline-end: 4vw; bottom: -14vh; background: rgba(232, 137, 45, 0.22)"></div>
+          <div class="bg-grain"></div>
+        </div>
+
+        <div class="slide__inner end__inner">
+          <div class="end__top">
+            <svg class="end__logo" viewBox="0 0 120 120" role="img" aria-label="شعار جامعة صعدة" data-reveal="scale" style="--rd: 120ms"><use href="#logo-saada" /></svg>
+            <p class="end__statement" data-reveal style="--rd: 300ms">
+              يقدم المشروع تصورا عمليا لنظام متكامل يجمع الرؤية الحاسوبية والذكاء
+              الاصطناعي والتحكم الآلي وإدارة البيانات، بهدف دعم عمليات فحص وفرز
+              البرتقال داخل خطوط الإنتاج.
+            </p>
+          </div>
+
+          <div class="end__thanks">
+            <h2 class="end__title" data-reveal="mask" style="--rd: 460ms">شكرا لحسن استماعكم</h2>
+            <p class="end__q" data-reveal style="--rd: 600ms">أسئلتكم واستفساراتكم</p>
+          </div>
+
+          <footer class="end__names" data-reveal style="--rd: 720ms">
+            <span class="end__names-label">إعداد الطلاب</span>
+            <ul class="end__names-list">
+              <li>م/ عمران عبدالرحمن علي الشبح</li>
+              <li>م/ عبدالرزاق علي عيظه شثان</li>
+              <li>م/ يعقوب عمران قايد شويط</li>
+            </ul>
+            <span class="end__year u-num">جامعة صعدة · 2026–2027</span>
+          </footer>
+        </div>
+      </section>
+    </main>
+
+    
+
+    
+
+    <script src="js/parts.js"></script>
+    <script src="js/cinema.js"></script>
+    <script src="js/flow.js"></script>
+  </body>
+</html>
