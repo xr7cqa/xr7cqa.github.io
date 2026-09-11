@@ -1,0 +1,30 @@
+name: unsplit-muallim-assets
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/unsplit-muallim-assets.yml'
+jobs:
+  unsplit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Concatenate full unsplit assets
+        run: |
+          set -euo pipefail
+          cat muallim-pro/assets/main-CiPoXCTF.p{0,1,2,3}.txt > muallim-pro/assets/main-CiPoXCTF.js
+          cat muallim-pro/assets/prompts-COg7M83J.p{0,1,2,3,4,5,6,7,8}.txt > muallim-pro/assets/prompts-COg7M83J.js
+          wc -c muallim-pro/assets/main-CiPoXCTF.js muallim-pro/assets/prompts-COg7M83J.js
+          test $(wc -c < muallim-pro/assets/main-CiPoXCTF.js) -gt 15000
+          test $(wc -c < muallim-pro/assets/prompts-COg7M83J.js) -gt 30000
+          grep -q "زيارة\|شواهد\|مدرستي" muallim-pro/assets/prompts-COg7M83J.js
+      - name: Commit full assets
+        run: |
+          git config user.name "xr7cqa"
+          git config user.email "zaydry7un@gmail.com"
+          git add muallim-pro/assets/main-CiPoXCTF.js muallim-pro/assets/prompts-COg7M83J.js
+          git diff --cached --quiet && echo "no changes" && exit 0
+          git commit -m "fix: publish full muallim-pro assets (unsplit)"
+          git push
