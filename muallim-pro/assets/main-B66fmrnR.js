@@ -1,2 +1,1 @@
-/* placeholder - will replace */
-export {};
+PLACEHOLDER_WILL_FAIL_CHECK
