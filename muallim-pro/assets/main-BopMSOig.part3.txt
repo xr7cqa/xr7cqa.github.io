@@ -1,0 +1,49 @@
+يط يشمل ما يتوفر من:
+المادة، الصف، عنوان الدرس، المدة/عدد الحصص، النواتج إن ذُكرت.
+إن نقص الأساسيات، اسأل 1–3 أسئلة فقط ثم قدّم هيكلًا بأفضل المتاح.`،shape:`1) بيانات الدرس (من المتاح)
+2) الأهداف
+3) التمهيد والعرض
+4) نشاط وتقويم
+5) أسئلة استكمال قصيرة إن لزم`}:e==="worksheet"?{required:`صمّم ورقة عمل أو تمارين:
+- وضّح المستوى (أساسي/متوسط/متقدم إن طُلب التدرج).
+- نوّع المهام.
+- اربطها بنفس ناتج التعلم إن ذُكر.
+- لا تصنّف طلابًا بأسماء.`,shape:`1) تعليمات قصيرة
+2) المهام حسب المستوى أو التنوع
+3) معيار نجاح مبسط
+4) أسئلة استكمال إن نقص المستوى أو العدد`}:e==="exam"?{required:`ابنِ أسئلة/اختبارًا وفق المتاح: موضوعات، عدد، درجة كلية، مستويات إن ذُكرت.
+صرّح بأي توزيع مواصفات مقترح أنه غير رسمي.`,shape:`1) هيكل الاختبار أو الأسئلة
+2) توزيع درجات إن أمكن
+3) مفتاح مختصر
+4) أسئلة استكمال إن لزم`}:{required:"حوّل طلب المعلم إلى مخرج عملي جاهز للاستخدام، بهيكل واضح وخطوات قابلة للتنفيذ.",shape:`1) ملخص فهم الطلب
+2) المخرج المطلوب مفصّلاً
+3) عناصر تحتاج استكمالًا (1–3 كحد أقصى)
+4) نسخة مختصرة جاهزة للنسخ إن ناسب`,sharedConstraints:r,inputBlock:l}}function N(e){const t=(e||"").trim();if(!t)return"يرجى كتابة طلبك أولاً.";const o=b(t),r=T(t),l=U(o.type,t,r),s=G(o.type,t,r),d=`- لا تخمّن أسماء طلاب أو معلمين أو مدارس.
+- لا تخمّن درجات أو نسب أو نتائج غير مذكورة صراحة.
+- لا تختلق أرقام تعاميم أو نماذج وزارية أو سياسات رسمية.
+- لا تنسب المخرج لوزارة التعليم أو أي جهة حكومية.
+- إذا نقصت معلومة ضرورية، اكتب «غير متوفر في المدخلات» واسأل عنها بدل اختراعها.`,E=l.length>0?`
+أسئلة للمعلم قبل الإكمال (أجب عليها إن استطعت — 1 إلى ${l.length}):
+`+l.map((i,u)=>`${u+1}) ${i}`).join(`
+`)+`
+`:"";return`الدور:
+أنت ${o.role}.
+
+المدخلات:
+- طلب المعلم (نص خام):
+"""
+${t}
+"""
+- تفاصيل مستخرجة إن وُجدت: ${Object.keys(r).length?Object.entries(r).map(([i,u])=>`${i}=${u}`).join("، "):"لا شيء مؤكد"}
+${E}
+المطلوب:
+${s.required}
+
+القيود:
+${d}
+
+شكل المخرج:
+${s.shape}
+
+قاعدة عدم التخمين:
+اعتمد فقط على نص طلب المعلم أعلاه. أي اسم أو رقم أو تعميم أو درجة غير واردة صراحة يجب عدم اختراعها.`}function v(){const e=N(n.converterInput.value);n.converterResult.textContent=e,n.converterOutput.classList.remove("hidden")}function $(){P(),I(),m(),n.searchInput.addEventListener("input",e=>{a.query=e.target.value,m()}),document.querySelectorAll("[data-close-modal]").forEach(e=>{e.addEventListener("click",g)}),document.addEventListener("keydown",e=>{e.key==="Escape"&&!n.modal.classList.contains("hidden")&&g()}),n.copyPromptBtn.addEventListener("click",()=>{a.activePrompt&&p(a.activePrompt.fullPrompt)}),n.convertBtn.addEventListener("click",v),n.copyConverterBtn.addEventListener("click",()=>{p(n.converterResult.textContent||"")}),n.editRequestBtn.addEventListener("click",()=>{n.converterInput.focus(),n.converterInput.scrollIntoView({behavior:"smooth",block:"center"})}),n.rephraseBtn.addEventListener("click",v),n.resetConverterBtn.addEventListener("click",()=>{n.converterInput.value="",n.converterResult.textContent="",n.converterOutput.classList.add("hidden"),n.converterInput.focus()})}$();
