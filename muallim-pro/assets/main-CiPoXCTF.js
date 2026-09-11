@@ -1,1 +1,1 @@
-PLACEHOLDER
+file:///workspace/muallim-pro/publish-github-io/assets/main-CiPoXCTF.js
