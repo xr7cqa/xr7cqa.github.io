@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="معلّم برو — برومبتات عملية جاهزة لمعلمي ومعلمات المملكة" />
+  <title>معلّم برو | برومبتات عملية للمعلمين</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script type="module" crossorigin src="./assets/main-BopMSOig.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/styles-DZqgxdTQ.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <h1 class="logo">معلّم برو</h1>
+        <p class="tagline">برومبتات عملية جاهزة لمعلمي ومعلمات المملكة — رتّبها حسب حاجتك وانسخها فورًا</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero" aria-label="مقدمة">
+      <p class="hero-text">
+        اختر برومبتًا جاهزًا، انسخه، وعدّل ما بين الأقواس المزدوجة حسب درسك.
+        مساعد مستقل غير رسمي — غير تابع لوزارة التعليم.
+      </p>
+    </section>
+
+    <section class="path-cards" aria-label="مساران رئيسان">
+      <a class="path-card" href="#library">
+        <span class="path-icon" aria-hidden="true">📚</span>
+        <span class="path-title">مكتبة البرومبتات</span>
+        <span class="path-desc">تصفّح وصنّف وانسخ برومبتًا جاهزًا</span>
+      </a>
+      <a class="path-card" href="#converter">
+        <span class="path-icon" aria-hidden="true">✏️</span>
+        <span class="path-title">تحويل الطلب إلى برومبت</span>
+        <span class="path-desc">اكتب مطلوبك بطريقتك واحصل على برومبت منظم</span>
+      </a>
+    </section>
+
+    <section id="weekly" class="weekly" aria-label="مقترحات هذا الأسبوع">
+      <h2 class="section-title">مقترحات هذا الأسبوع</h2>
+      <p class="section-sub">اختيارات سريعة مفيدة حاليًا — ليست مدونة</p>
+      <div id="weeklyGrid" class="weekly-grid"></div>
+    </section>
+
+    <section id="library" class="library" aria-label="مكتبة البرومبتات">
+      <h2 class="section-title">مكتبة البرومبتات</h2>
+
+      <div class="toolbar" aria-label="بحث وتصفية">
+        <label class="search-wrap" for="searchInput">
+          <span class="sr-only">بحث</span>
+          <input
+            id="searchInput"
+            type="search"
+            placeholder="ابحث بالعنوان أو الوسم أو الحاجة..."
+            autocomplete="off"
+          />
+        </label>
+        <div id="categoryChips" class="chips" role="list" aria-label="تصفية حسب الفئة"></div>
+      </div>
+
+      <p id="resultsMeta" class="results-meta"></p>
+      <div id="promptsGrid" class="prompts-grid"></div>
+      <p id="emptyState" class="empty-state hidden">لا توجد نتائج مطابقة. جرّب كلمة أخرى أو فئة مختلفة.</p>
+    </section>
+
+    <section id="converter" class="converter" aria-label="تحويل الطلب إلى برومبت">
+      <h2>تحويل الطلب إلى برومبت</h2>
+      <p class="converter-desc">
+        اكتب المطلوب بطريقتك، وسيُعاد تنظيمه في برومبت واضح وجاهز للاستخدام.
+        لن نخترع أسماءً أو درجات أو تعاميم غير مذكورة.
+      </p>
+      <label for="converterInput" class="field-label">اكتب طلبك</label>
+      <textarea
+        id="converterInput"
+        rows="5"
+        placeholder="مثال: أحتاج تحضير درس رياضيات للصف الخامس عن الكسور خلال 45 دقيقة..."
+      ></textarea>
+      <button type="button" id="convertBtn" class="btn btn-primary btn-block">حوّل إلى برومبت</button>
+      <div id="converterOutput" class="converter-output hidden">
+        <pre id="converterResult"></pre>
+        <div class="converter-actions">
+          <button type="button" id="copyConverterBtn" class="btn btn-secondary">نسخ البرومبت</button>
+          <button type="button" id="editRequestBtn" class="btn btn-ghost">تعديل الطلب</button>
+          <button type="button" id="rephraseBtn" class="btn btn-ghost">إعادة الصياغة</button>
+          <button type="button" id="resetConverterBtn" class="btn btn-ghost">البدء من جديد</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <nav class="footer-nav" aria-label="روابط إضافية">
+        <a href="./how.html">طريقة الاستخدام</a>
+        <a href="./privacy.html">خصوصية البيانات</a>
+        <a href="./contact.html">تواصل</a>
+      </nav>
+      <p>
+        <strong>إخلاء مسؤولية:</strong>
+        معلّم برو أداة مساعدة مستقلة غير رسمية، وغير تابعة لوزارة التعليم ولا لأي جهة حكومية.
+        لا تستخدم شعارات رسمية، ولا تمثّل سياسات أو تعاميم وزارية.
+        راجع دائمًا مخرجات الذكاء الاصطناعي قبل الاعتماد عليها في العمل الرسمي.
+      </p>
+      <p class="footer-copy">معلّم برو — للاستخدام التعليمي الشخصي</p>
+    </div>
+  </footer>
+
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-panel">
+      <header class="modal-header">
+        <h2 id="modalTitle"></h2>
+        <button type="button" class="icon-btn" data-close-modal aria-label="إغلاق">×</button>
+      </header>
+      <div class="modal-meta">
+        <span id="modalCategory" class="badge"></span>
+        <div class="modal-block">
+          <h3 class="modal-label">ما الذي ينجزه</h3>
+          <p id="modalNeed" class="modal-need"></p>
+        </div>
+        <div id="modalWhenWrap" class="modal-block hidden">
+          <h3 class="modal-label">متى يفيدك</h3>
+          <p id="modalWhen" class="modal-need"></p>
+        </div>
+        <div class="modal-block">
+          <h3 class="modal-label">ما البيانات التي يحتاجها</h3>
+          <ul id="modalPlaceholders" class="placeholder-list"></ul>
+        </div>
+        <div id="modalAppsWrap" class="modal-block hidden">
+          <h3 class="modal-label">التطبيقات المناسبة</h3>
+          <p id="modalApps" class="modal-need"></p>
+        </div>
+      </div>
+      <h3 class="modal-label">نص البرومبت</h3>
+      <pre id="modalPrompt" class="modal-prompt"></pre>
+      <p id="modalNote" class="modal-note hidden"></p>
+      <footer class="modal-actions">
+        <button type="button" id="copyPromptBtn" class="btn btn-primary">نسخ البرومبت</button>
+        <button type="button" class="btn btn-ghost" data-close-modal>إغلاق</button>
+      </footer>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden" role="status" aria-live="polite">تم النسخ</div>
+
+</body>
+</html>
