@@ -4,8 +4,8 @@ const _parts=await Promise.all(_u.map(async u=>{
   if(!r.ok) throw new Error("prompts chunk missing: "+u+" "+r.status);
   return r.text();
 }));
-const _url="data:text/javascript;charset=utf-8,"+encodeURIComponent(_parts.join(""));
-const _m=await import(_url);
+const _code=_parts.join("").replace(/export\{t as F,l as P,e as W\};?\s*$/,"return {F:t,P:l,W:e};");
+const _m=(new Function(_code))();
 export const F=_m.F;
 export const P=_m.P;
 export const W=_m.W;
