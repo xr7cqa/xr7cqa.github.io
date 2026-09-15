@@ -1,0 +1,46 @@
+
+const n={
+searchInput:document.getElementById("searchInput"),
+categoryChips:document.getElementById("categoryChips"),
+promptsGrid:document.getElementById("promptsGrid"),
+weeklyGrid:document.getElementById("weeklyGrid"),
+resultsMeta:document.getElementById("resultsMeta"),
+emptyState:document.getElementById("emptyState"),
+emptyMessage:document.getElementById("emptyMessage"),
+nearSuggestions:document.getElementById("nearSuggestions"),
+modal:document.getElementById("modal"),
+modalTitle:document.getElementById("modalTitle"),
+modalCategory:document.getElementById("modalCategory"),
+modalNeed:document.getElementById("modalNeed"),
+modalWhen:document.getElementById("modalWhen"),
+modalWhenWrap:document.getElementById("modalWhenWrap"),
+modalPlaceholders:document.getElementById("modalPlaceholders"),
+modalApps:document.getElementById("modalApps"),
+modalAppsWrap:document.getElementById("modalAppsWrap"),
+modalPrompt:document.getElementById("modalPrompt"),
+modalNote:document.getElementById("modalNote"),
+modalExample:document.getElementById("modalExample"),
+modalExampleWrap:document.getElementById("modalExampleWrap"),
+copyPromptBtn:document.getElementById("copyPromptBtn"),
+toast:document.getElementById("toast"),
+copyHelperLine:document.getElementById("copyHelperLine"),
+converterInput:document.getElementById("converterInput"),
+convertBtn:document.getElementById("convertBtn"),
+converterOutput:document.getElementById("converterOutput"),
+converterResult:document.getElementById("converterResult"),
+copyConverterBtn:document.getElementById("copyConverterBtn"),
+editRequestBtn:document.getElementById("editRequestBtn"),
+rephraseBtn:document.getElementById("rephraseBtn"),
+resetConverterBtn:document.getElementById("resetConverterBtn")
+};
+const state={query:"",facet:"الكل",active:null};
+let toastTimer=null;
+function norm(s){return(s||"").toString().toLowerCase().replace(/[\u064B-\u0652]/g,"").trim()}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+function hay(e){return norm([e.title,e.needSummary,e.category,e.facet||"",e.whenUseful||"",e.exampleResult||"",...(e.tags||[])].join(" "))}
+function filtered(){const q=norm(state.query);return p.filter(e=>(state.facet==="الكل"||e.facet===state.facet)&&(!q||hay(e).includes(q)))}
+function toast(msg){n.toast.textContent=msg;n.toast.classList.remove("hidden");if(n.copyHelperLine){n.copyHelperLine.hidden=false;n.copyHelperLine.textContent="الصق في ChatGPT أو Gemini. عبّئ الأقواس من درسك. لا ترفع الناتج كملف رسمي."}clearTimeout(toastTimer);toastTimer=setTimeout(()=>n.toast.classList.add("hidden"),1800)}
+async function copyText(t){try{await navigator.clipboard.writeText(t)}catch{const a=document.createElement("textarea");a.value=t;a.style.position="fixed";a.style.left="-9999px";document.body.appendChild(a);a.select();document.execCommand("copy");document.body.removeChild(a)}toast("تم النسخ")}
+function exampleHtml(e,compact){const r=(e.exampleResult||"").trim();if(!r)return"";const lines=r.split("\n").filter(Boolean).slice(0,compact?3:6);return `<pre class="card-example">${esc(lines.join("\n"))}</pre>`}
+function card(e,compact){const el=document.createElement("article");el.className="prompt-card"+(compact?" prompt-card--compact":"");el.innerHTML=`<span class="badge">${esc(e.category)}</span><h3>${esc(e.title)}</h3><p class="need">${esc(e.needSummary)}</p>${e.whenUseful&&!compact?`<p class="when-useful">${esc(e.whenUseful)}</p>`:""}${exampleHtml(e,compact)}<div class="card-actions"><button type="button" class="btn btn-sm btn-primary" data-view>عرض البرومبت</button><button type="button" class="btn btn-sm btn-secondary" data-copy>نسخ البرومبت</button></div>`;el.querySelector("[data-view]").onclick=ev=>{ev.stopPropagation();openModal(e)};el.querySelector("[data-copy]").onclick=ev=>{ev.stopPropagation();copyText(e.fullPrompt)};return el}
+function renderChips(){n.categoryChips.innerHTML="";b.forEach(facet=>{const btn=document.createElement("button");btn.type="button";btn.className="chip"+(state.facet===facet?" active":"");btn.textContent=facet;btn.setAttribute("role","listitem");btn.onclick=()=>{state.facet=facet;renderChips();renderGrid()};n.
