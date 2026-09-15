@@ -1,1 +1,1 @@
-@/workspace/muallim-pro/publish-github-io/assets/prompts-VFSCrMWn.js
+PLACEHOLDER_LOAD_FROM_FILE
