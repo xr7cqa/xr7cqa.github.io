@@ -8,16 +8,31 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <script type="module" crossorigin src="./assets/main-CiPoXCTF.js"></script>
-  <link rel="modulepreload" crossorigin href="./assets/prompts-COg7M83J.js">
-  <link rel="stylesheet" crossorigin href="./assets/styles-DZqgxdTQ.css">
+  <script type="module" crossorigin src="./assets/main-giqOitYl.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/prompts-VFSCrMWn.js">
+  <link rel="stylesheet" crossorigin href="./assets/styles-D_XLBmTa.css">
 </head>
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <div class="brand">
-        <h1 class="logo">معلّم برو</h1>
-        <p class="tagline">برومبتات عملية جاهزة لمعلمي ومعلمات المملكة — رتّبها حسب حاجتك وانسخها فورًا</p>
+      <div class="brand-row">
+        <div class="brand">
+          <h1 class="logo">معلّم برو</h1>
+          <p class="tagline">برومبتات عملية جاهزة لمعلمي ومعلمات المملكة — رتّبها حسب حاجتك وانسخها فورًا</p>
+        </div>
+        <a
+          class="telegram-btn"
+          href="https://t.me/ARNewsAI"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="قناة التيليجرام"
+        >
+          <svg class="telegram-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="12" r="12" fill="#229ED9"/>
+            <path fill="#fff" d="M5.4 11.7 16.8 7.3c.53-.2 1.02.13.84.9l-1.95 9.2c-.14.64-.52.8-1.06.5l-2.92-2.15-1.41 1.36c-.16.16-.29.29-.6.29l.21-3.01 5.48-4.95c.24-.21-.05-.33-.37-.12l-6.78 4.27-2.92-.91c-.63-.2-.64-.63.14-.93z"/>
+          </svg>
+          <span>قناة التيليجرام</span>
+        </a>
       </div>
     </div>
   </header>
@@ -45,7 +60,7 @@
 
     <section id="weekly" class="weekly" aria-label="مقترحات هذا الأسبوع">
       <h2 class="section-title">مقترحات هذا الأسبوع</h2>
-      <p class="section-sub">اختيارات سريعة مفيدة حاليًا — ليست مدونة</p>
+      <p class="section-sub">محدّثة يدوياً حسب شغل الميدان هذا الأسبوع</p>
       <div id="weeklyGrid" class="weekly-grid"></div>
     </section>
 
@@ -62,12 +77,16 @@
             autocomplete="off"
           />
         </label>
-        <div id="categoryChips" class="chips" role="list" aria-label="تصفية حسب الفئة"></div>
+        <div id="categoryChips" class="chips" role="list" aria-label="تصفية سريعة"></div>
       </div>
 
       <p id="resultsMeta" class="results-meta"></p>
       <div id="promptsGrid" class="prompts-grid"></div>
-      <p id="emptyState" class="empty-state hidden">لا توجد نتائج مطابقة. جرّب كلمة أخرى أو فئة مختلفة.</p>
+      <div id="emptyState" class="empty-state hidden">
+        <p id="emptyMessage">لا توجد مطابقة مباشرة</p>
+        <p class="empty-hint">جرّب كلمة أخرى أو فئة مختلفة.</p>
+        <div id="nearSuggestions" class="near-suggestions" hidden></div>
+      </div>
     </section>
 
     <section id="converter" class="converter" aria-label="تحويل الطلب إلى برومبت">
@@ -108,6 +127,7 @@
         لا تستخدم شعارات رسمية، ولا تمثّل سياسات أو تعاميم وزارية.
         راجع دائمًا مخرجات الذكاء الاصطناعي قبل الاعتماد عليها في العمل الرسمي.
       </p>
+      <p class="footer-x">حساب X <a href="https://x.com/Prmptor" target="_blank" rel="noopener noreferrer">@Prmptor</a> — نفس البرومبتات، وأرشيفها هنا.</p>
       <p class="footer-copy">معلّم برو — للاستخدام التعليمي الشخصي</p>
     </div>
   </footer>
@@ -138,9 +158,14 @@
           <p id="modalApps" class="modal-need"></p>
         </div>
       </div>
+      <div id="modalExampleWrap" class="modal-block">
+        <h3 class="modal-label">مثال نتيجة</h3>
+        <pre id="modalExample" class="modal-example"></pre>
+      </div>
       <h3 class="modal-label">نص البرومبت</h3>
       <pre id="modalPrompt" class="modal-prompt"></pre>
       <p id="modalNote" class="modal-note hidden"></p>
+      <p class="copy-helper">الصق في ChatGPT أو Gemini. عبّئ الأقواس من درسك. لا ترفع الناتج كملف رسمي.</p>
       <footer class="modal-actions">
         <button type="button" id="copyPromptBtn" class="btn btn-primary">نسخ البرومبت</button>
         <button type="button" class="btn btn-ghost" data-close-modal>إغلاق</button>
@@ -149,6 +174,7 @@
   </div>
 
   <div id="toast" class="toast hidden" role="status" aria-live="polite">تم النسخ</div>
+  <p id="copyHelperLine" class="copy-helper-line" hidden>الصق في ChatGPT أو Gemini. عبّئ الأقواس من درسك. لا ترفع الناتج كملف رسمي.</p>
 
 </body>
 </html>
