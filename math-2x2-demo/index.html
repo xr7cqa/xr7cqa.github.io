@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>حل المعادلتين بخمس طرق</title>
+<style>
+:root{
+  --bg:#f6f4ef;--card:#ffffff;--ink:#1f2433;--muted:#5d6475;--line:#e6e2d8;
+  --x:#2457d6;--xbg:#e8eefc;--y:#d9590f;--ybg:#fdeee4;--b:#0f8a5f;--bbg:#e3f5ed;
+  --bad:#c0392b;--badbg:#fdecea;--good:#0f8a5f;--goodbg:#e3f5ed;--accent:#3b2f8f;--accentbg:#eeebfb;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Naskh Arabic","Segoe UI",Tahoma,system-ui,sans-serif;font-size:17px;line-height:1.8}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 48px}
+header{background:linear-gradient(135deg,#2a2370,#3b2f8f 55%,#5643c6);color:#fff;padding:28px 18px 34px;border-radius:0 0 28px 28px;margin-bottom:22px}
+header .wrap{padding-bottom:0}
+.kicker{display:inline-block;background:rgba(255,255,255,.16);padding:2px 12px;border-radius:999px;font-size:14px;margin-bottom:8px}
+h1{font-size:28px;line-height:1.4;margin:4px 0 14px}
+.sys{background:#fff;color:var(--ink);border-radius:16px;padding:14px 18px;display:inline-block;font-size:22px;box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.answer{margin-top:16px;display:flex;flex-wrap:wrap;gap:10px}
+.pill{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:12px;padding:6px 14px;font-size:16px}
+nav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
+nav a{background:var(--card);border:1px solid var(--line);color:var(--ink);text-decoration:none;padding:6px 14px;border-radius:999px;font-size:15px}
+nav a:active{background:var(--accentbg)}
+section{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px 18px;margin-bottom:18px}
+h2{font-size:22px;margin:0 0 6px;display:flex;align-items:center;gap:10px}
+.num{background:var(--accent);color:#fff;border-radius:10px;min-width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
+.when{display:inline-block;background:var(--accentbg);color:var(--accent);border-radius:8px;padding:2px 10px;font-size:14px;margin-bottom:10px}
+p{margin:6px 0 12px}
+.lead{color:var(--muted)}
+.step{border-right:4px solid var(--accent);background:#faf9f6;border-radius:12px;padding:10px 14px;margin:12px 0}
+.step .t{font-weight:700;color:var(--accent);font-size:15px}
+.why{color:var(--muted);font-size:15px;margin:4px 0 0}
+.m{direction:ltr;unicode-bidi:isolate;display:inline-block;font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;font-size:20px;white-space:nowrap}
+.mline{direction:ltr;text-align:left;overflow-x:auto;padding:3px 0;font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;font-size:21px;white-space:nowrap}
+.mi{direction:ltr;unicode-bidi:isolate;display:inline-block;font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;white-space:nowrap}
+.vx{color:var(--x);font-weight:700}
+.vy{color:var(--y);font-weight:700}
+.vb{color:var(--b);font-weight:700}
+.hl{background:#fff3b0;border-radius:4px;padding:0 3px}
+.strike{text-decoration:line-through;text-decoration-color:var(--bad);text-decoration-thickness:2px;opacity:.6}
+.fr{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;line-height:1.15;margin:0 2px;font-size:.9em}
+.fr>span:first-child{border-bottom:2px solid currentColor;padding:0 3px}
+.fr>span:last-child{padding:0 3px}
+.mat,.det{display:inline-grid;grid-template-columns:repeat(2,auto);gap:2px 16px;vertical-align:middle;padding:4px 10px;margin:0 4px;text-align:center}
+.mat{border-left:2px solid var(--ink);border-right:2px solid var(--ink);border-radius:10px}
+.det{border-left:2px solid var(--ink);border-right:2px solid var(--ink)}
+.col1{display:inline-grid;grid-template-columns:auto;gap:2px;vertical-align:middle;padding:4px 10px;margin:0 4px;border-left:2px solid var(--ink);border-right:2px solid var(--ink);border-radius:10px;text-align:center}
+.cb{background:var(--bbg);color:var(--b);border-radius:6px;padding:0 4px;font-weight:700}
+.stack{direction:ltr;display:inline-grid;grid-template-columns:auto auto auto auto auto;gap:0 8px;font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;font-size:21px;text-align:right}
+.stack .rule{grid-column:1/-1;border-top:2px solid var(--ink);margin:2px 0}
+.result{background:var(--goodbg);border:1px solid #b9e3cf;border-radius:14px;padding:10px 14px;margin-top:12px}
+.result b{color:var(--good)}
+.tip{background:var(--accentbg);border-radius:14px;padding:10px 14px;margin:12px 0;font-size:16px}
+.graph{display:flex;flex-direction:column;align-items:center;margin:8px 0}
+.graph svg{width:100%;max-width:420px;height:auto;background:#fff;border:1px solid var(--line);border-radius:14px}
+.legend{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;font-size:15px;margin-top:8px}
+.legend span::before{content:"";display:inline-block;width:18px;height:4px;border-radius:2px;margin-left:6px;vertical-align:middle;background:currentColor}
+table{width:100%;border-collapse:collapse;margin:8px 0;font-size:16px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:right;vertical-align:top}
+th{background:#faf9f6}
+.pairs{display:grid;gap:10px}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.bad,.good{border-radius:12px;padding:8px 10px;font-size:16px}
+.bad{background:var(--badbg);border:1px solid #f3c4bf}
+.good{background:var(--goodbg);border:1px solid #b9e3cf}
+.tag{display:inline-block;font-size:13px;font-weight:700;border-radius:6px;padding:0 8px;margin-bottom:4px}
+.bad .tag{background:var(--bad);color:#fff}
+.pair .m{display:block;text-align:left;margin-top:4px}
+.good .tag{background:var(--good);color:#fff}
+.flow{display:grid;gap:10px}
+.q{background:#faf9f6;border:1px solid var(--line);border-radius:14px;padding:10px 14px}
+.q .a{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.q .a span{background:var(--accentbg);color:var(--accent);border-radius:8px;padding:2px 10px;font-size:15px}
+.ex{border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:12px 0}
+.ex .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
+.ex input{width:96px;padding:8px 10px;border:1px solid #cfcab9;border-radius:10px;font-size:17px;direction:ltr;text-align:center;font-family:inherit}
+.ex button{background:var(--accent);color:#fff;border:0;border-radius:10px;padding:9px 16px;font-size:16px;font-family:inherit}
+.fb{font-size:15px;margin-top:6px;min-height:1.6em}
+.fb.ok{color:var(--good);font-weight:700}
+.fb.no{color:var(--bad);font-weight:700}
+details{margin-top:8px}
+summary{cursor:pointer;color:var(--accent);font-weight:700;font-size:16px}
+details .inner{margin-top:6px;background:#faf9f6;border-radius:10px;padding:8px 12px}
+footer{text-align:center;color:var(--muted);font-size:15px;margin-top:20px}
+@media (max-width:420px){body{font-size:16px}h1{font-size:24px}.sys{font-size:19px}.mline,.stack{font-size:16px}.m{font-size:17px}.mat,.det,.col1{gap:2px 10px;padding:3px 7px}.pair{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <span class="kicker">المصفوفات وأنظمة المعادلات</span>
+    <h1>نظام معادلتين بخمس طرق، وكلها توصلك لنفس الجواب</h1>
+    <div class="sys">
+      <div class="mline" style="padding:0">2<span class="vx">x</span> + 3<span class="vy">y</span> = 12</div>
+      <div class="mline" style="padding:0">4<span class="vx">x</span> − <span class="vy">y</span> = 5</div>
+    </div>
+    <div class="answer">
+      <span class="pill">الجواب: <span class="m" style="font-size:18px;color:#fff"><span>x</span> = <span class="fr"><span>27</span><span>14</span></span> ≈ 1.93</span></span>
+      <span class="pill"><span class="m" style="font-size:18px;color:#fff"><span>y</span> = <span class="fr"><span>19</span><span>7</span></span> ≈ 2.71</span></span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<nav>
+  <a href="#idea">الفكرة</a>
+  <a href="#m1">التعويض</a>
+  <a href="#m2">الحذف</a>
+  <a href="#m3">كرامر</a>
+  <a href="#m4">المعكوس</a>
+  <a href="#m5">الرسم</a>
+  <a href="#check">التحقق</a>
+  <a href="#choose">أي طريقة؟</a>
+  <a href="#mistakes">الأغلاط</a>
+  <a href="#practice">تدربي</a>
+</nav>
+
+<section id="idea">
+  <h2>الفكرة في سطرين</h2>
+  <p>عندنا شرطين على <span class="vx">x</span> و <span class="vy">y</span>، ونبي الزوج الوحيد اللي يحقق الاثنين مع بعض. كل طريقة تحت توصلك لنفس الزوج بطريق مختلف.</p>
+  <div class="tip">الألوان ثابتة في كل الصفحة: <span class="vx">x بالأزرق</span>، و<span class="vy">y بالبرتقالي</span>، و<span class="vb">الأرقام اللي بعد يساوي بالأخضر</span>.</div>
+</section>
+
+<section id="m1">
+  <h2><span class="num">1</span>التعويض</h2>
+  <span class="when">أحسن وقت لها: متغير معامله <span class="mi">1</span> أو <span class="mi">−1</span></span>
+  <p class="lead">طلعي متغير من معادلة، وحطيه في الثانية.</p>
+
+  <div class="step">
+    <div class="t">الخطوة 1: طلعي <span class="vy">y</span> من المعادلة الثانية</div>
+    <div class="mline">4<span class="vx">x</span> − <span class="vy">y</span> = 5 &nbsp;⟹&nbsp; <span class="vy">y</span> = 4<span class="vx">x</span> − 5</div>
+    <p class="why">ليش الثانية؟ لأن <span class="vy">y</span> فيها بدون رقم قدامها، فتطلع بدون كسور.</p>
+  </div>
+
+  <div class="step">
+    <div class="t">الخطوة 2: حطيها مكان <span class="vy">y</span> في المعادلة الأولى</div>
+    <div class="mline">2<span class="vx">x</span> + 3<span class="hl">(4<span class="vx">x</span> − 5)</span> = 12</div>
+  </div>
+
+  <div class="step">
+    <div class="t">الخطوة 3: فكي القوس، والـ 3 تنضرب في الاثنين</div>
+    <div class="mline">2<span class="vx">x</span> + <span class="hl">12<span class="vx">x</span> − 15</span> = 12</div>
+    <p class="why"><span class="mi">3 × 4x = 12x</span> و <span class="mi">3 × (−5) = −15</span>. أكثر غلط هنا إن البنات يكتبون <span class="mi">−5</span> وينسون يضربونها.</p>
+  </div>
+
+  <div class="step">
+    <div class="t">الخطوة 4: اجمعي وطلعي <span class="vx">x</span></div>
+    <div class="mline">14<span class="vx">x</span> = 27 &nbsp;⟹&nbsp; <span class="vx">x</span> = <span class="fr"><span>27</span><span>14</span></span></div>
+  </div>
+
+  <div class="step">
+    <div class="t">الخطوة 5: ارجعي لـ <span class="vy">y</span> = 4<span class="vx">x</span> − 5</div>
+    <div class="mline"><span class="vy">y</span> = 4 · <span class="fr"><span>27</span><span>14</span></span> − 5 = <span class="fr"><span>108</span><span>14</span></span> − <span class="fr"><span>70</span><span>14</span></span></div>
+    <div class="mline">&nbsp;&nbsp;&nbsp;= <span class="fr"><span>38</span><span>14</span></span> = <span class="fr"><span>19</span><span>7</span></span></div>
+    <p class="why">حولنا 5 لكسر مقامه 14 عشان نقدر نطرح: <span class="mi">5 = 70/14</span>.</p>
+  </div>
+</section>
+
+<section id="m2">
+  <h2><span class="num">2</span>الحذف</h2>
+  <span class="when">أحسن وقت لها: أرقام صحيحة وتبين أسرع حل</span>
+  <p class="lead">خلي متغير واحد بنفس الرقم وإشارة عكس في المعادلتين، واجمعيهم فيختفي.</p>
+
+  <div class="step">
+    <div class="t">الخطوة 1: اضربي الثانية كلها في 3</div>
+    <div class="mline">(4<span class="vx">x</span> − <span class="vy">y</span> = 5) × 3</div>
+    <div class="mline">⟹ &nbsp;12<span class="vx">x</span> − 3<span class="vy">y</span> = <span class="vb">15</span></div>
+    <p class="why">ليش 3؟ لأن الأولى فيها موجب 3y، فنبي الثانية يكون فيها سالب 3y. واضربي كل الحدود، حتى الرقم اللي بعد يساوي.</p>
+  </div>
+
+  <div class="step">
+    <div class="t">الخطوة 2: اجمعي المعادلتين</div>
+    <div class="stack">
+      <span></span><span>2<span class="vx">x</span></span><span class="strike">+ 3<span class="vy">y</span></span><span>=</span><span class="vb">12</span>
+      <span>+</span><span>12<span class="vx">x</span></span><span class="strike">− 3<span class="vy">y</span></span><span>=</span><span class="vb">15</span>
+      <span class="rule"></span>
+      <span></span><span>14<span class="vx">x</span></span><span></span><span>=</span><span class="vb">27</span>
+    </div>
+    <p class="why">موجب 3y وسالب 3y يلغون بعض، ويبقى <span class="vx">x</span> لحاله: <span class="mi"><span class="vx">x</span> = 27/14</span></p>
+  </div>
+
+  <div class="step">
+    <div class="t">الخطوة 3: طلعي <span class="vy">y</span> بنفس الفكرة</div>
+    <p class="why" style="margin-top:0">اضربي الأولى في 2 فتصير <span class="mi">4x + 6y = 24</span>، واطرحي منها الثانية:</p>
+    <div class="stack">
+      <span></span><span class="strike">4<span class="vx">x</span></span><span>+ 6<span class="vy">y</span></span><span>=</span><span class="vb">24</span>
+      <span>−</span><span class="strike">(4<span class="vx">x</span></span><span>− <span class="vy">y</span>)</span><span>=</span><span class="vb">5</span>
+      <span class="rule"></span>
+      <span></span><span></span><span>7<span class="vy">y</span></span><span>=</span><span class="vb">19</span>
+    </div>
+    <p class="why">السالب قدام القوس يقلب كل إشارة داخله، فسالب y يصير موجب y، و <span class="mi">6y + y = 7y</span>. والجواب <span class="mi"><span class="vy">y</span> = 19/7</span></p>
+  </div>
+</section>
+
+<section id="m3">
+  <h2><span class="num">3</span>قاعدة كرامر</h2>
+  <span class="when">أحسن وقت لها: الجواب بيطلع كسور</span>
+  <p class="lead">ثلاث محددات وقسمتين. خطوات ثابتة ما فيها لف ودوران.</p>
+
+  <div class="step">
+    <div class="t">الخطوة 1: محدد أرقام <span class="vx">x</span> و <span class="vy">y</span></div>
+    <div class="mline">D = <span class="det"><span class="vx">2</span><span class="vy">3</span><span class="vx">4</span><span class="vy">−1</span></span> = (2)(−1) − (3)(4)</div>
+    <div class="mline">&nbsp;&nbsp;&nbsp;= −2 − 12 = −14</div>
+    <p class="why">القاعدة <span class="mi">ad − bc</span>، يعني القطر النازل ناقص القطر الطالع. D مو صفر، يعني فيه حل واحد.</p>
+  </div>
+
+  <div class="step">
+    <div class="t">الخطوة 2: حطي الأخضر مكان عمود <span class="vx">x</span></div>
+    <div class="mline">D<sub>x</sub> = <span class="det"><span class="cb">12</span><span class="vy">3</span><span class="cb">5</span><span class="vy">−1</span></span> = (12)(−1) − (3)(5)</div>
+    <div class="mline">&nbsp;&nbsp;&nbsp;&nbsp;= −12 − 15 = −27</div>
+  </div>
+
+  <div class="step">
+    <div class="t">الخطوة 3: حطي الأخضر مكان عمود <span class="vy">y</span></div>
+    <div class="mline">D<sub>y</sub> = <span class="det"><span class="vx">2</span><span class="cb">12</span><span class="vx">4</span><span class="cb">5</span></span> = (2)(5) − (12)(4)</div>
+    <div class="mline">&nbsp;&nbsp;&nbsp;&nbsp;= 10 − 48 = −38</div>
+  </div>
+
+  <div class="step">
+    <div class="t">الخطوة 4: اقسمي على D</div>
+    <div class="mline"><span class="vx">x</span> = <span class="fr"><span>D<sub>x</sub></span><span>D</span></span> = <span class="fr"><span>−27</span><span>−14</span></span> = <span class="fr"><span>27</span><span>14</span></span></div>
+    <div class="mline"><span class="vy">y</span> = <span class="fr"><span>D<sub>y</sub></span><span>D</span></span> = <span class="fr"><span>−38</span><span>−14</span></span> = <span class="fr"><span>19</span><span>7</span></span></div>
+    <p class="why">سالب على سالب يعطي موجب.</p>
+  </div>
+</section>
+
+<section id="m4">
+  <h2><span class="num">4</span>المصفوفة المعكوسة</h2>
+  <span class="when">أحسن وقت لها: السؤال يقول باستخدام المصفوفات</span>
+  <p class="lead">نكتب النظام <span class="mi">A × X = b</span>، والحل <span class="mi">X = A<sup>−1</sup> × b</span></p>
+
+  <div class="step">
+    <div class="t">الخطوة 1: اكتبي النظام بالمصفوفات</div>
+    <div class="mline"><span class="mat"><span class="vx">2</span><span class="vy">3</span><span class="vx">4</span><span class="vy">−1</span></span> × <span class="col1"><span class="vx">x</span><span class="vy">y</span></span> = <span class="col1"><span class="vb">12</span><span class="vb">5</span></span></div>
+  </div>
+
+  <div class="step">
+    <div class="t">الخطوة 2: المعكوس بوصفة ثابتة</div>
+    <div class="mline">A<sup>−1</sup> = <span class="fr"><span>1</span><span>ad − bc</span></span> <span class="mat"><span>d</span><span>−b</span><span>−c</span><span>a</span></span></div>
+    <div class="mline">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= <span class="fr"><span>1</span><span>−14</span></span> <span class="mat"><span>−1</span><span>−3</span><span>−4</span><span>2</span></span></div>
+    <p class="why">بدلي مكان a و d، وغيري إشارة b و c بس، واقسمي على المحدد.</p>
+  </div>
+
+  <div class="step">
+    <div class="t">الخطوة 3: اضربي في عمود الأخضر، كل صف في العمود</div>
+    <div class="mline"><span class="col1"><span class="vx">x</span><span class="vy">y</span></span> = <span class="fr"><span>1</span><span>−14</span></span> <span class="col1"><span>(−1)(12) + (−3)(5)</span><span>(−4)(12) + (2)(5)</span></span></div>
+    <div class="mline">&nbsp;&nbsp;&nbsp;&nbsp;= <span class="fr"><span>1</span><span>−14</span></span> <span class="col1"><span>−27</span><span>−38</span></span> = <span class="col1"><span class="vx"><span class="fr"><span>27</span><span>14</span></span></span><span class="vy"><span class="fr"><span>19</span><span>7</span></span></span></span></div>
+  </div>
+</section>
+
+<section id="m5">
+  <h2><span class="num">5</span>الرسم</h2>
+  <span class="when">أحسن وقت لها: تبين تفهمين الفكرة أو تتأكدين من جوابك</span>
+  <p class="lead">كل معادلة خط مستقيم، والحل هو النقطة اللي يتقاطعون فيها.</p>
+
+  <div class="graph">
+    <svg viewBox="-14 -14 348 328" direction="ltr" style="direction:ltr;unicode-bidi:isolate" role="img" aria-label="رسم الخطين 2x+3y=12 و 4x-y=5 يتقاطعان قرب النقطة 1.93 و 2.71">
+      <g stroke="#eceae3" stroke-width="1">
+        <line x1="0" y1="0" x2="0" y2="300"/><line x1="80" y1="0" x2="80" y2="300"/><line x1="120" y1="0" x2="120" y2="300"/><line x1="160" y1="0" x2="160" y2="300"/><line x1="200" y1="0" x2="200" y2="300"/><line x1="240" y1="0" x2="240" y2="300"/><line x1="280" y1="0" x2="280" y2="300"/><line x1="320" y1="0" x2="320" y2="300"/>
+        <line x1="0" y1="0" x2="320" y2="0"/><line x1="0" y1="25" x2="320" y2="25"/><line x1="0" y1="50" x2="320" y2="50"/><line x1="0" y1="75" x2="320" y2="75"/><line x1="0" y1="100" x2="320" y2="100"/><line x1="0" y1="125" x2="320" y2="125"/><line x1="0" y1="175" x2="320" y2="175"/><line x1="0" y1="200" x2="320" y2="200"/><line x1="0" y1="225" x2="320" y2="225"/><line x1="0" y1="250" x2="320" y2="250"/><line x1="0" y1="275" x2="320" y2="275"/><line x1="0" y1="300" x2="320" y2="300"/>
+      </g>
+      <line x1="0" y1="150" x2="320" y2="150" stroke="#9a968a" stroke-width="1.5"/>
+      <line x1="40" y1="0" x2="40" y2="300" stroke="#9a968a" stroke-width="1.5"/>
+      <g font-size="11" fill="#7b7768" font-family="Tahoma,sans-serif">
+        <text x="76" y="164">1</text><text x="116" y="164">2</text><text x="156" y="164">3</text><text x="196" y="164">4</text><text x="236" y="164">5</text><text x="276" y="164">6</text>
+        <text x="28" y="54">4</text><text x="28" y="104">2</text><text x="22" y="204">−2</text><text x="22" y="254">−4</text>
+        <text x="306" y="144">x</text><text x="46" y="10">y</text>
+      </g>
+      <line x1="0" y1="33.3" x2="320" y2="166.7" stroke="#2457d6" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="30" y1="300" x2="150" y2="0" stroke="#d9590f" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="40" cy="50" r="4.5" fill="#2457d6"/><circle cx="280" cy="150" r="4.5" fill="#2457d6"/>
+      <circle cx="40" cy="275" r="4.5" fill="#d9590f"/>
+      <circle cx="117.1" cy="82.1" r="9" fill="#0f8a5f" fill-opacity=".18"/>
+      <circle cx="117.1" cy="82.1" r="5.5" fill="#0f8a5f"/>
+      <g font-family="Tahoma,sans-serif" font-size="13" font-weight="700">
+        <text x="134" y="68" fill="#0f8a5f">(1.93 , 2.71)</text>
+        <text x="48" y="44" fill="#2457d6" font-size="11">(0 , 4)</text>
+        <text x="250" y="140" fill="#2457d6" font-size="11">(6 , 0)</text>
+        <text x="48" y="285" fill="#d9590f" font-size="11">(0 , −5)</text>
+      </g>
+    </svg>
+    <div class="legend">
+      <span style="color:#2457d6">2x + 3y = 12</span>
+      <span style="color:#d9590f">4x − y = 5</span>
+    </div>
+  </div>
+
+  <table>
+    <tr><th>الخط</th><th>لما x = 0</th><th>نقطة ثانية</th></tr>
+    <tr><td class="vx"><span class="m" style="font-size:17px">2x + 3y = 12</span></td><td><span class="m" style="font-size:17px">(0, 4)</span></td><td><span class="m" style="font-size:17px">(6, 0)</span></td></tr>
+    <tr><td class="vy"><span class="m" style="font-size:17px">4x − y = 5</span></td><td><span class="m" style="font-size:17px">(0, −5)</span></td><td><span class="m" style="font-size:17px">(2, 3)</span></td></tr>
+  </table>
+  <p class="why">الرسم ما يعطيك الكسر بالضبط، لكنه يفهمك وش معنى الحل، ويكشف لك لو حسبتي غلط.</p>
+</section>
+
+<section id="check">
+  <h2>التحقق: دقيقة تنقذ درجتك</h2>
+  <p>عوضي الجواب في المعادلتين الأصليتين:</p>
+  <div class="mline">2 · <span class="fr"><span>27</span><span>14</span></span> + 3 · <span class="fr"><span>19</span><span>7</span></span> = <span class="fr"><span>54</span><span>14</span></span> + <span class="fr"><span>114</span><span>14</span></span></div>
+  <div class="mline">&nbsp;&nbsp;&nbsp;= <span class="fr"><span>168</span><span>14</span></span> = <span class="vb">12</span></div>
+  <div class="mline" style="margin-top:8px">4 · <span class="fr"><span>27</span><span>14</span></span> − <span class="fr"><span>19</span><span>7</span></span> = <span class="fr"><span>108</span><span>14</span></span> − <span class="fr"><span>38</span><span>14</span></span></div>
+  <div class="mline">&nbsp;&nbsp;&nbsp;= <span class="fr"><span>70</span><span>14</span></span> = <span class="vb">5</span></div>
+  <div class="result">طلع <b>12</b> و <b>5</b>، نفس اللي في المعادلتين الأصليتين. الجواب صح.</div>
+</section>
+
+<section id="choose">
+  <h2>أي طريقة أختار في الاختبار؟</h2>
+  <div class="flow">
+    <div class="q">السؤال يحدد طريقة؟
+      <div class="a"><span>نعم: امشي عليها</span><span>لا: كملي تحت</span></div>
+    </div>
+    <div class="q">فيه متغير معامله <span class="mi">1</span> أو <span class="mi">−1</span>؟
+      <div class="a"><span>نعم: التعويض أو الحذف</span><span>لا: كرامر</span></div>
+    </div>
+    <div class="q">خلصتي ومتبقي وقت؟
+      <div class="a"><span>عوضي الجواب في المعادلتين</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="mistakes">
+  <h2>أغلاط تضيع الدرجات</h2>
+  <div class="pairs">
+    <div class="pair">
+      <div class="bad"><span class="tag">غلط</span><div class="m">3(4x − 5) = 12x − 5</div></div>
+      <div class="good"><span class="tag">صح</span><div class="m">3(4x − 5) = 12x − 15</div></div>
+    </div>
+    <div class="pair">
+      <div class="bad"><span class="tag">غلط</span><div>ضربتي المعادلة ونسيتي اليمين</div><div class="m">12x − 3y = 5</div></div>
+      <div class="good"><span class="tag">صح</span><div>كل الحدود تنضرب</div><div class="m">12x − 3y = 15</div></div>
+    </div>
+    <div class="pair">
+      <div class="bad"><span class="tag">غلط</span><div class="m">det = bc − ad</div></div>
+      <div class="good"><span class="tag">صح</span><div class="m">det = ad − bc</div></div>
+    </div>
+    <div class="pair">
+      <div class="bad"><span class="tag">غلط</span><div>في المعكوس غيرتي إشارة كل الأرقام</div></div>
+      <div class="good"><span class="tag">صح</span><div>a و d يتبدلون، و b و c تتغير إشارتهم بس</div></div>
+    </div>
+    <div class="pair">
+      <div class="bad"><span class="tag">غلط</span><div>قسمتي على D وهو صفر</div></div>
+      <div class="good"><span class="tag">صح</span><div>إذا <span class="mi">D = 0</span> وقفي، النظام ما له حل واحد</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="practice">
+  <h2>تدربي بنفسك</h2>
+  <p class="lead">اكتبي الجواب كسر مثل <span class="mi">27/14</span> أو رقم، واضغطي تحققي. وإذا علقتي افتحي التلميح.</p>
+
+  <div class="ex" data-x="4" data-y="5">
+    <div class="mline">x + y = 9 &nbsp;&nbsp;|&nbsp;&nbsp; 2x − y = 3</div>
+    <div class="row"><span class="mi vx">x =</span><input inputmode="text" aria-label="x"><span class="mi vy">y =</span><input inputmode="text" aria-label="y"><button type="button">تحققي</button></div>
+    <div class="fb"></div>
+    <details><summary>تلميح</summary><div class="inner">جربي الحذف: اجمعي المعادلتين مباشرة، y تروح ويبقى <span class="mi">3x = 12</span></div></details>
+  </div>
+
+  <div class="ex" data-x="3" data-y="2">
+    <div class="mline">x + 2y = 7 &nbsp;&nbsp;|&nbsp;&nbsp; 3x − y = 7</div>
+    <div class="row"><span class="mi vx">x =</span><input inputmode="text" aria-label="x"><span class="mi vy">y =</span><input inputmode="text" aria-label="y"><button type="button">تحققي</button></div>
+    <div class="fb"></div>
+    <details><summary>تلميح</summary><div class="inner">جربي التعويض: من الثانية <span class="mi">y = 3x − 7</span>، وعوضيها في الأولى.</div></details>
+  </div>
+
+  <div class="ex" data-x="2" data-y="5">
+    <div class="mline">3x + 2y = 16 &nbsp;&nbsp;|&nbsp;&nbsp; 2x − 3y = −11</div>
+    <div class="row"><span class="mi vx">x =</span><input inputmode="text" aria-label="x"><span class="mi vy">y =</span><input inputmode="text" aria-label="y"><button type="button">تحققي</button></div>
+    <div class="fb"></div>
+    <details><summary>تلميح</summary><div class="inner">جربي كرامر: <span class="mi">D = (3)(−3) − (2)(2) = −13</span>. كملي <span class="mi">D<sub>x</sub></span> و <span class="mi">D<sub>y</sub></span>.</div></details>
+  </div>
+
+  <div class="ex" data-x="1" data-y="-1">
+    <div class="mline">5x + 2y = 3 &nbsp;&nbsp;|&nbsp;&nbsp; 3x − 4y = 7</div>
+    <div class="row"><span class="mi vx">x =</span><input inputmode="text" aria-label="x"><span class="mi vy">y =</span><input inputmode="text" aria-label="y"><button type="button">تحققي</button></div>
+    <div class="fb"></div>
+    <details><summary>تلميح</summary><div class="inner">جربي المعكوس: <span class="mi">D = −26</span>، والمعكوس:<div class="mline"><span class="fr"><span>1</span><span>−26</span></span> <span class="mat"><span>−4</span><span>−2</span><span>−3</span><span>5</span></span></div></div></details>
+  </div>
+
+  <div class="ex">
+    <div class="mline">2x + 4y = 6 &nbsp;&nbsp;|&nbsp;&nbsp; x + 2y = 5</div>
+    <p style="margin:6px 0 0">هذا له حل ولا لا؟ فكري قبل ما تفتحين الجواب.</p>
+    <details><summary>الجواب</summary><div class="inner">ما له حل. <span class="mi">D = (2)(2) − (4)(1) = 0</span>. ولو قسمتي الأولى على 2 تصير <span class="mi">x + 2y = 3</span>، والثانية تقول <span class="mi">x + 2y = 5</span>. نفس الشي ما يساوي رقمين، فالخطين متوازيين وما يتقاطعون أبد.</div></details>
+  </div>
+</section>
+
+<footer>إذا خلصتي، ارجعي لأي نظام وحليه بطريقة ثانية. إذا طلع نفس الجواب، فأنتِ فاهمة الفكرة مو حافظة خطوات.</footer>
+
+</div>
+
+<script>
+(function(){
+  function parse(v){
+    v=String(v||'').trim().replace(/−/g,'-').replace(/\s+/g,'').replace(/[٠-٩]/g,function(d){return '٠١٢٣٤٥٦٧٨٩'.indexOf(d)});
+    if(!v) return NaN;
+    if(v.indexOf('/')>-1){var p=v.split('/');if(p.length!==2) return NaN;var a=parseFloat(p[0]),b=parseFloat(p[1]);return b===0?NaN:a/b;}
+    return parseFloat(v);
+  }
+  var boxes=document.querySelectorAll('.ex[data-x]');
+  for(var i=0;i<boxes.length;i++){(function(box){
+    var ins=box.querySelectorAll('input'),fb=box.querySelector('.fb'),btn=box.querySelector('button');
+    btn.addEventListener('click',function(){
+      var x=parse(ins[0].value),y=parse(ins[1].value);
+      if(isNaN(x)||isNaN(y)){fb.className='fb no';fb.textContent='اكتبي قيمة x وقيمة y أول.';return;}
+      var ok=Math.abs(x-parseFloat(box.dataset.x))<0.01&&Math.abs(y-parseFloat(box.dataset.y))<0.01;
+      if(ok){fb.className='fb ok';fb.textContent='صح عليك! عوضيها في المعادلتين وشوفي بنفسك.';}
+      else{fb.className='fb no';fb.textContent='مو صح. راجعي الإشارات أول شي، وبعدين افتحي التلميح.';}
+    });
+  })(boxes[i]);}
+})();
+</script>
+</body>
+</html>
